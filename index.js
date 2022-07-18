@@ -20,18 +20,17 @@ async function run() {
 
 
         //get requests
-        app.get('/', async (req, res) => {
-            res.send("Server Running")
-        });
+
 
 
     } catch (error) {
 
     }
 }
-run().catch(console.dir)
-
-    ;
+run().catch(console.dir);
+app.get('/', async (req, res) => {
+    res.json({ message: "Server Running" })
+});
 
 app.listen(port, async (req, res) => {
     console.log("Listening to ", port);
