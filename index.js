@@ -21,10 +21,10 @@ app.use("/user", userRouter)
 
 
 //Root api 
-app.use((req, res) =>{
+app.use((req, res) => {
     res.send("Recruit Hub server is Running")
 })
 
-app.listen(port, ()=>{
-console.log('listen to port, ', port);
+app.listen(port, () => {
+    console.log('listen to port, ', port);
 })
