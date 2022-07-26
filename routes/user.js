@@ -17,6 +17,24 @@ router.post('/', async (req, res) => {
     accessToken,
   });
 });
+//Get all users
+router.get('/', async (req, res) => {
+  const users = await User.find({});
+  res.send({
+    users,
+  });
+});
+
+//post or create an user
+router.post('/', async (req, res) => {
+  console.log('hit');
+  const userDate = req.body;
+  const accessToken = generateToken(userDate);
+  User.insertOne();
+  res.json({
+    accessToken,
+  });
+});
 
 router.post('/create', create);
 
