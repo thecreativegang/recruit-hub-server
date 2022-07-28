@@ -3,6 +3,7 @@ const cors = require('cors');
 require('dotenv').config();
 const userRoute = require('./routes/user.js');
 const developerRoute = require('./routes/featuredDeveloper.js');
+const countryCode = require('./routes/countryCode.js');
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -16,6 +17,7 @@ require('./db');
 
 app.use('/user', userRoute);
 app.use('/developer', developerRoute);
+app.use('/country', countryCode);
 
 app.get('/', async (req, res) => {
   res.json({ message: 'Server Running' });
