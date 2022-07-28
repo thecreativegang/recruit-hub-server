@@ -17,6 +17,7 @@ router.post('/', async (req, res) => {
     accessToken,
   });
 });
+
 //Get all users
 router.get('/', async (req, res) => {
   const users = await User.find({});
