@@ -18,6 +18,7 @@ const userSchema = mongoose.Schema({
   accountType: {
     type: String,
     enum: ['developer', 'recruiter'],
+    default: 'developer'
   },
   isAdmin: {
     type: Boolean,

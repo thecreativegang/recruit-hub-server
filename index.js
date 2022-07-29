@@ -6,7 +6,7 @@ const developerRoute = require('./routes/featuredDeveloper.js');
 const countryCode = require('./routes/countryCode.js');
 
 const app = express();
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 3001;
 
 //middle wire
 app.use(cors());
