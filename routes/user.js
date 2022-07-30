@@ -1,7 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
+const { checkUsername } = require('../controller/checkUsernameController');
 const { create } = require('../controller/userController');
+
 
 //Function for token generation
 const generateToken = (userData) => {
@@ -36,6 +38,11 @@ router.post('/', async (req, res) => {
     accessToken,
   });
 });
+
+
+//Check username is valid or not
+router.post('/check-username/:username', checkUsername);
+
 
 router.post('/create', create);
 
