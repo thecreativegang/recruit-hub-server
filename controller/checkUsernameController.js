@@ -11,5 +11,5 @@ exports.checkUsername = async (req, res) => {
 
         res.json({ isAvailable: false })
     }
-
+    // 
 };
