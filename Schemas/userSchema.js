@@ -11,9 +11,10 @@ const userSchema = mongoose.Schema({
     required: true,
     unique: true,
   },
-  userName: {
+  username: {
     type: String,
-    unique: true,
+    default: ''
+    // unique: true,
   },
   accountType: {
     type: String,
@@ -26,4 +27,4 @@ const userSchema = mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = userSchema;

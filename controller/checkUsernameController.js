@@ -1,9 +1,9 @@
-const User = require('../Schemas/userSchema');
+const mongoose = require('mongoose');
+const userSchema = require('../Schemas/userSchema');
+const User = new mongoose.model("User", userSchema)
 
 exports.checkUsername = async (req, res) => {
-    console.log(req.params.username)
-    const result = await User.find({ userName: req.params.username })
-    console.log(result)
+    const result = await User.find({ username: req.params.username })
     if (result.length === 0) {
         res.json({ isAvailable: true })
     }
