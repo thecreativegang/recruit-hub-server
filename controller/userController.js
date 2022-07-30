@@ -35,6 +35,7 @@ exports.create = async (req, res) => {
   })
 
 };
+// 
 
 exports.get = async (req, res) => {
   const userInfo = await User.find({ email: req?.decoded?.userData?.email })
