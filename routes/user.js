@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const { checkUsername } = require('../controller/checkUsernameController');
-const { create, get } = require('../controller/userController');
+const { create, get, updateUsername } = require('../controller/userController');
 
 
 //JWT Verify
@@ -59,6 +59,9 @@ router.post('/create', create);
 
 //get the user info
 router.get('/:email', verifyJWT, get);
+
+
+router.post('/username', verifyJWT, updateUsername);
 
 
 module.exports = router;

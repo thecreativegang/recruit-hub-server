@@ -37,11 +37,18 @@ exports.create = async (req, res) => {
 };
 
 exports.get = async (req, res) => {
-  console.log('req.decoded', req.decoded.userData.email)
   const userInfo = await User.find({ email: req?.decoded?.userData?.email })
   res.json({
     message: 'successfull',
     status: 200,
+    userInfo
+  })
+
+}
+
+exports.updateUsername = async (req, res) => {
+  const userInfo = await User.updateOne({ email: req?.decoded?.userData?.email }, { username: req?.body?.username })
+  res.json({
     userInfo
   })
 
