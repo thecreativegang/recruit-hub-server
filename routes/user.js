@@ -38,7 +38,6 @@ router.post('/', async (req, res) => {
 });
 
 
-
 //post or create an user
 router.post('/', async (req, res) => {
   console.log('hit');
