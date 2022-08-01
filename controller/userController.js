@@ -9,7 +9,6 @@ const generateToken = (userData) => {
 };
 exports.create = async (req, res) => {
   const userData = req.body;
-  console.log('userData', userData)
   const accessToken = await generateToken({ userData });
   const ifEmailAlreadyRegistered = await User.find({
     email: userData?.email
