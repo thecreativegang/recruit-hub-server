@@ -4,39 +4,34 @@ const { sendError } = require('../utilities/errorHelper');
 const userSchema = require('../Schemas/userSchema');
 const User = new mongoose.model("User", userSchema);
 const jwt = require('jsonwebtoken');
-
 const generateToken = (userData) => {
-  console.log(userData);
   return jwt.sign(userData, process.env.JWT_SECRET_KEY, { expiresIn: '1d' });
 };
-
-
 exports.create = async (req, res) => {
   const userData = req.body;
-
+  console.log('userData', userData)
   const accessToken = await generateToken({ userData });
-
-  // console.log(userData)
-  const newUser = new User(userData);
-  await newUser.save((err) => {
-    if (err) {
-      res.json({
-        error: err.message,
-        code: err.code,
-        accessToken
-      })
-    }
-    else {
-      console.log(res.data.status)
-      res.status(200).json({
-        message: "User created successfully", accessToken
-      })
-    }
+  const ifEmailAlreadyRegistered = await User.find({
+    email: userData?.email
   })
-
+  if (ifEmailAlreadyRegistered.length === 0) {
+    const newUser = new User(userData);
+    await newUser.save((err) => {
+      if (err) {
+        res.json({
+          error: err.message,
+          code: err.code,
+          accessToken
+        })
+      }
+      else {
+        res.status(200).json({
+          message: "User created successfully", accessToken
+        })
+      }
+    })
+  }
 };
-
-
 exports.get = async (req, res) => {
   const userInfo = await User.find({ email: req?.decoded?.userData?.email })
   res.json({
@@ -44,15 +39,12 @@ exports.get = async (req, res) => {
     status: 200,
     userInfo
   })
-
 }
-
 exports.updateUsername = async (req, res) => {
   const userInfo = await User.updateOne({ email: req?.decoded?.userData?.email }, { username: req?.body?.username })
   res.json({
     userInfo
   })
-
 }
 
 

@@ -14,7 +14,6 @@ const userSchema = mongoose.Schema({
   username: {
     type: String,
     default: ''
-    // unique: true,
   },
   accountType: {
     type: String,
