@@ -3,10 +3,12 @@ const cors = require('cors');
 require('dotenv').config();
 const userRoute = require('./routes/user.js');
 const developerRoute = require('./routes/featuredDeveloper.js');
+const skillAssessment = require('./routes/skillAssessment');
 const countryCode = require('./routes/countryCode.js');
 
 const app = express();
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 3001;
+// 
 
 //middle wire
 app.use(cors());
@@ -18,6 +20,7 @@ require('./db');
 app.use('/user', userRoute);
 app.use('/developer', developerRoute);
 app.use('/country', countryCode);
+app.use('/skillassessment', skillAssessment);
 
 app.get('/', async (req, res) => {
   res.json({ message: 'Server Running' });
