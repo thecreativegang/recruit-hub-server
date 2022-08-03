@@ -23,6 +23,8 @@
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^4.8.0",
     "mongoose": "^6.4.5",
-    "nodemon": "^2.0.19"
+    "nodemon": "^2.0.19",
+    "socket.io": "^4.5.1",
+    "soket.io": "^0.0.1-security"
   }
 }

@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const { create } = require('../controller/userController');
+const User = require('../Schemas/userSchema');
 
 //Function for token generation
 const generateToken = (userData) => {
@@ -25,6 +26,9 @@ router.get('/', async (req, res) => {
     users,
   });
 });
+
+//Get search users
+
 
 //post or create an user
 router.post('/', async (req, res) => {
