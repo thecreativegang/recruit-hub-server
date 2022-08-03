@@ -10,22 +10,29 @@ const generateToken = (userData) => {
 exports.create = async (req, res) => {
   const userData = req.body;
   const accessToken = await generateToken({ userData });
+
+
+  //check if email is already registered or not
   const ifEmailAlreadyRegistered = await User.find({
     email: userData?.email
-  })
+  });
+
+  //get the user info if registered
   if (ifEmailAlreadyRegistered.length === 0) {
     const newUser = new User(userData);
-    await newUser.save((err) => {
+    const insertedUser = await newUser.save((err) => {
       if (err) {
         res.json({
           error: err.message,
           code: err.code,
-          accessToken
+          accessToken,
         })
       }
       else {
         res.status(200).json({
-          message: "User created successfully", accessToken
+          insertedUser,
+          accessToken,
+          message: "User created successfully",
         })
       }
     })
