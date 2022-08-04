@@ -1,9 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
+
+
 const { checkUsername } = require('../controller/checkUsernameController');
 const { create, get, updateUsername } = require('../controller/userController');
 
+const { create } = require('../controller/userController');
+const User = require('../Schemas/userSchema');
 
 //JWT Verify
 function verifyJWT(req, res, next) {
@@ -37,6 +41,9 @@ router.post('/', async (req, res) => {
   });
 });
 // 
+
+//Get search users
+
 
 //post or create an user
 router.post('/', async (req, res) => {
