@@ -56,6 +56,7 @@ io.on("connection", (socket) => {
 })
 */
 const io = new Server(server, {
+  pingTimeout: 60000,
   cors: {
     origin: "http://localhost:3000",
     methods: ["GET", "POST"],
@@ -65,16 +66,37 @@ const io = new Server(server, {
 io.on("connection", (socket) => {
   console.log(`User Connected: ${socket.id}`);
 
-  socket.on("join_room", (data) => {
-    socket.join(data);
+
+  socket.on("setup", (userData) => {
+    socket.join(userData._id);
+    socket.emit("Connected");
     console.log(`User with ID: ${socket.id} joined room: ${data}`);
+
+    socket.on("join_room", (room) => {
+      socket.join(room);
+      console.log(`User with ID: ${socket.id} joined room: ${room}`);
+
+    });
+
   });
 
   socket.on("send_message", (data) => {
     socket.to(data.room).emit("receive_message", data);
   });
 
+
+  socket.on("newMessage", (newMessageRecieved) => {
+    let chat = newMessageRecieved.chat;
+    if (!chat.user) return console.log("Chat.user not define")
+
+    socket.in(user._id).emit("message received", newMessageRecieved);
+    socket.to(data.room).emit("receive_message", data);
+  });
+
+
   socket.on("disconnect", () => {
     console.log("User Disconnected", socket.id);
   });
+
+
 });
