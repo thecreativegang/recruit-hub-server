@@ -4,6 +4,7 @@ require('dotenv').config();
 const userRoute = require('./routes/user.js');
 const chatRoute = require('./routes/chatRoute.js');
 const developerRoute = require('./routes/featuredDeveloper.js');
+const skillAssessment = require('./routes/skillAssessment');
 const countryCode = require('./routes/countryCode.js');
 
 
@@ -23,6 +24,7 @@ require('./db');
 app.use('/user', userRoute);
 app.use('/developer', developerRoute);
 app.use('/country', countryCode);
+app.use('/skillassessment', skillAssessment);
 
 // for chat 
 app.use('/api/chat', chatRoute);
