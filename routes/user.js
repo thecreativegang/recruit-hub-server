@@ -59,8 +59,9 @@ router.post('/create', create);
 //get the user info
 router.get('/:email', verifyJWT, get);
 
-
+//add username if not any
 router.post('/username', verifyJWT, updateUsername);
+
 
 
 module.exports = router;
