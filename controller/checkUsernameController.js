@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const userSchema = require('../Schemas/userSchema');
-const User = new mongoose.model("User", userSchema); //user
+const User = new mongoose.model("User", userSchema);
 
 exports.checkUsername = async (req, res) => {
 
