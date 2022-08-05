@@ -4,6 +4,7 @@ const { sendError } = require('../utilities/errorHelper');
 const userSchema = require('../Schemas/userSchema');
 const User = new mongoose.model("User", userSchema);
 const jwt = require('jsonwebtoken');
+const { get } = require('../routes/user');
 
 const generateToken = (userData) => {
   console.log(userData);
@@ -58,7 +59,10 @@ exports.updateUsername = async (req, res) => {
 
 
 
-
+exports.getAllUsers = async (req, res) => {
+  const getAllUSers = await User.find({});
+  res.send(getAllUSers);
+}
 
 
 
