@@ -2,7 +2,6 @@ const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
 const userRoute = require('./routes/user.js');
-const chatRoute = require('./routes/chatRoute.js');
 const messageRoute = require('./routes/messageRoute');
 const developerRoute = require('./routes/featuredDeveloper.js');
 const skillAssessment = require('./routes/skillAssessment');
@@ -29,7 +28,6 @@ app.use('/country', countryCode);
 app.use('/skillassessment', skillAssessment);
 
 // for chat 
-app.use('/api/chat', chatRoute);
 app.use("/api/messages", messageRoute);
 
 
