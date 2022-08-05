@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 const { checkUsername } = require('../controller/checkUsernameController');
 const { create, get, updateUsername } = require('../controller/userController');
 
-const { create } = require('../controller/userController');
+// const { create } = require('../controller/userController');
 const User = require('../Schemas/userSchema');
 
 //JWT Verify

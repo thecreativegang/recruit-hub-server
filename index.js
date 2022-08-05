@@ -3,6 +3,7 @@ const cors = require('cors');
 require('dotenv').config();
 const userRoute = require('./routes/user.js');
 const chatRoute = require('./routes/chatRoute.js');
+const messageRoute = require('./routes/messageRoute');
 const developerRoute = require('./routes/featuredDeveloper.js');
 const skillAssessment = require('./routes/skillAssessment');
 const countryCode = require('./routes/countryCode.js');
@@ -10,7 +11,8 @@ const countryCode = require('./routes/countryCode.js');
 
 const app = express();
 const port = process.env.PORT || 3001;
-const { Server } = require("socket.io");
+const socket = require("socket.io")
+
 
 
 
@@ -28,6 +30,8 @@ app.use('/skillassessment', skillAssessment);
 
 // for chat 
 app.use('/api/chat', chatRoute);
+app.use("/api/messages", messageRoute);
+
 
 
 app.get('/', async (req, res) => {
@@ -38,32 +42,36 @@ app.get('/', async (req, res) => {
 
 
 
+
 const server = app.listen(port, () => {
   console.log(`Listening to port ${port}`);
 });
 
-/*
-// soket code 
-const io = require('socket.io')(server, {
-  pingTimeout: 60000,
-  cors: {
-    origin: "http://localhost:3002",
-  },
-})
-io.on("connection", (socket) => {
-  console.log("connected to socket.io")
-  socket.on('setup', (userData) => {
-    socket.join(userData._id);
-  })
-})
-*/
-const io = new Server(server, {
+
+const io = socket(server, {
   pingTimeout: 60000,
   cors: {
     origin: "http://localhost:3000",
-    methods: ["GET", "POST"],
+    Credentials: true,
+
   },
 });
+// global.onlineUsers = new Map();
+
+// io.on("connection", (socket) => {
+//   global.chatSocket = socket;
+//   socket.on("add-user", (userId) => {
+//     onlineUsers.set(userId, socket.id);
+//   });
+
+//   socket.on("send-msg", (data) => {
+//     const sendUserSocket = onlineUsers.get(data.to);
+//     if (sendUserSocket) {
+//       socket.to(sendUserSocket).emit("msg-recieve", data.msg);
+//     }
+//   });
+
+// });
 
 io.on("connection", (socket) => {
   console.log(`User Connected: ${socket.id}`);
