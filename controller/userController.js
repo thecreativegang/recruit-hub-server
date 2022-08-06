@@ -40,13 +40,15 @@ exports.create = async (req, res) => {
     })
   }
 };
-exports.get = async (req, res) => {
-  const userInfo = await User.find({ email: req?.decoded?.userData?.email })
-  res.json({
-    message: 'successfull',
-    status: 200,
-    userInfo
-  })
+exports.getUserInfo = async (req, res) => {
+  console.log('hello')
+  // console.log('req.decoded in userInfo', req.decoded)
+  // const userInfo = await User.find({ email: req?.decoded?.userData?.email })
+  // res.json({
+  //   message: 'successfull',
+  //   status: 200,
+  //   userInfo
+  // })
 }
 exports.updateUsername = async (req, res) => {
   const userInfo = await User.updateOne({ email: req?.decoded?.userData?.email }, { username: req?.body?.username })

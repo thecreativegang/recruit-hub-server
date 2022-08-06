@@ -72,7 +72,7 @@ const io = socket(server, {
 // });
 
 io.on("connection", (socket) => {
-  console.log(`User Connected: ${socket.id}`);
+  // console.log(`User Connected: ${socket.id}`);
 
 
   socket.on("setup", (userData) => {
