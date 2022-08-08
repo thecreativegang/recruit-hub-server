@@ -1,9 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
-const { checkUsername } = require('../controller/checkUsernameController');
-const { create, get, updateUsername } = require('../controller/userController');
 
+
+const { checkUsername } = require('../controller/checkUsernameController');
+const { create, getUserInfo, updateUsername, getAllUsers } = require('../controller/userController');
+
+// const { create } = require('../controller/userController');
+const User = require('../Schemas/userSchema');
 
 //JWT Verify
 function verifyJWT(req, res, next) {
@@ -28,27 +32,10 @@ function verifyJWT(req, res, next) {
   }
 }
 
-router.post('/', async (req, res) => {
-  console.log('hit');
-  const accessToken = generateToken(req.body);
+// console.log('hello')
 
-  res.json({
-    accessToken,
-  });
-});
-// 
-
-//post or create an user
-router.post('/', async (req, res) => {
-  console.log('hit');
-  const userDate = req.body;
-  const accessToken = generateToken(userDate);
-  User.insertOne();
-  res.json({
-    accessToken,
-  });
-});
-
+// get all users
+router.get('/', getAllUsers)
 
 //Check username is valid or not
 router.post('/check-username/:username', checkUsername);
@@ -57,10 +44,11 @@ router.post('/check-username/:username', checkUsername);
 router.post('/create', create);
 
 //get the user info
-router.get('/:email', verifyJWT, get);
+router.post('/userInfo', getUserInfo);
 
-
+//add username if not any
 router.post('/username', verifyJWT, updateUsername);
+
 
 
 module.exports = router;
