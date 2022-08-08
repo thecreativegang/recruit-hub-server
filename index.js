@@ -6,6 +6,7 @@ const messageRoute = require('./routes/messageRoute');
 const developerRoute = require('./routes/featuredDeveloper.js');
 const skillAssessment = require('./routes/skillAssessment');
 const countryCode = require('./routes/countryCode.js');
+const job = require('./routes/job');
 
 
 const app = express();
@@ -26,6 +27,7 @@ app.use('/user', userRoute);
 app.use('/developer', developerRoute);
 app.use('/country', countryCode);
 app.use('/skillassessment', skillAssessment);
+app.use('/job', job);
 
 // for chat 
 app.use("/api/messages", messageRoute);
