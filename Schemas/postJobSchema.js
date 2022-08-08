@@ -34,13 +34,25 @@ const postJobSchema = mongoose.Schema({
         required: true
     },
     tags: {
-        type: String,
+        type: Array,
         required: true
     },
     applicationDeadline: {
-        type: String,
-        required: true
+        type: Object,
+        required: true,
+        deadlineDay: {
+            type: String,
+            require: true,
+        },
+        deadlineMonth: {
+            type: String,
+            require: true,
+        },
+        deadlineYear: {
+            type: String,
+            require: true,
+        },
     },
 });
 
-module.exports = mongoose.model('PostJobSchema', postJobSchema);
+module.exports = mongoose.model('Job', postJobSchema);
