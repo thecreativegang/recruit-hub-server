@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
+const postJob = require('../controller/jobController')
 
 
 //JWT Verify
@@ -29,7 +30,7 @@ function verifyJWT(req, res, next) {
 
 
 //Check username is valid or not
-router.post('/postJob', postJob);
+// router.post('/postJob', postJob);
 
 
 

@@ -40,15 +40,34 @@ exports.create = async (req, res) => {
     })
   }
 };
-exports.getUserInfo = async (req, res) => {
-  console.log('hello')
-  // console.log('req.decoded in userInfo', req.decoded)
-  // const userInfo = await User.find({ email: req?.decoded?.userData?.email })
-  // res.json({
-  //   message: 'successfull',
-  //   status: 200,
-  //   userInfo
-  // })
+
+
+exports.get = async (req, res) => {
+  const userInfo = await User.find({ email: req?.decoded?.userData?.email })
+  console.log(req.params.email);
+  res.json({
+    message: 'successfull',
+    status: 200,
+    userInfo
+  })
+
+}
+// get single email by email
+exports.getsingleemail = async (req, res) => {
+  const email = req.params.email;
+  const query = { email: email };
+  const user = await User.findOne(query);
+  res.send(user);
+}
+exports.get = async (req, res) => {
+  const userInfo = await User.find({ email: req?.decoded?.userData?.email })
+  console.log(req.params.email);
+  res.json({
+    message: 'successfull',
+    status: 200,
+    userInfo
+  })
+
 }
 exports.updateUsername = async (req, res) => {
   const userInfo = await User.updateOne({ email: req?.decoded?.userData?.email }, { username: req?.body?.username })
