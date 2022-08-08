@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 
 
 const { checkUsername } = require('../controller/checkUsernameController');
-const { create, get, updateUsername, getAllUsers } = require('../controller/userController');
+const { create, get, updateUsername, getAllUsers, getsingleemail } = require('../controller/userController');
 
 // const { create } = require('../controller/userController');
 const User = require('../Schemas/userSchema');
@@ -44,6 +44,9 @@ router.post('/create', create);
 
 //get the user info
 router.get('/:email', verifyJWT, get);
+
+//get single email by email  
+router.get('/email/:email', getsingleemail);
 
 
 router.post('/username', verifyJWT, updateUsername);
