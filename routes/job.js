@@ -30,7 +30,7 @@ function verifyJWT(req, res, next) {
 
 
 //Check username is valid or not
-router.post('/postJob', postJob);
+// router.post('/postJob', postJob);
 
 
 
