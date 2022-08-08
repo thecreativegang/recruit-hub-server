@@ -49,7 +49,7 @@ const server = app.listen(port, () => {
 const io = socket(server, {
   pingTimeout: 60000,
   cors: {
-    origin: "http://localhost:3000",
+    origin: ["http://localhost:3000", "https://recruit-hub-bbd21.web.app"],
     Credentials: true,
 
   },
@@ -72,17 +72,17 @@ const io = socket(server, {
 // });
 
 io.on("connection", (socket) => {
-  console.log(`User Connected: ${socket.id}`);
+  // console.log(`User Connected: ${socket.id}`);
 
 
   socket.on("setup", (userData) => {
     socket.join(userData._id);
     socket.emit("Connected");
-    console.log(`User with ID: ${socket.id} joined room: ${data}`);
+    // console.log(`User with ID: ${socket.id} joined room: ${data}`);
 
     socket.on("join_room", (room) => {
       socket.join(room);
-      console.log(`User with ID: ${socket.id} joined room: ${room}`);
+      // console.log(`User with ID: ${socket.id} joined room: ${room}`);
 
     });
 

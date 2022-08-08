@@ -14,12 +14,11 @@ const userSchema = mongoose.Schema({
   username: {
     type: String,
     default: ''
-    // unique: true,
   },
   accountType: {
     type: String,
     enum: ['developer', 'recruiter'],
-    default: 'developer'
+    default: ''
   },
   isAdmin: {
     type: Boolean,
