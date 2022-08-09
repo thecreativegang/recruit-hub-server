@@ -73,7 +73,7 @@ exports.postAJob = async (req, res) => {
 
 exports.getAllJob = async (req, res) => {
     const jobs = await Job.find({})
-    console.log(format(add(new Date(), { hours: 6 }), 'Pp'))
+    console.log(format(add(new Date(), { hours: 6 }), 'PPpp'))
     res.status(200)
     res.json({
         status: 200,
