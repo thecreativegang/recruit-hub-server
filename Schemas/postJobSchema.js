@@ -5,10 +5,6 @@ const postJobSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    publishedTime: {
-        type: String,
-        required: true
-    },
     publisherUsername: {
         type: String,
         required: true

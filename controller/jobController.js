@@ -35,8 +35,7 @@ exports.postAJob = async (req, res) => {
 
     //make object to match schema
     const jobData = {
-        publishedDate: format(new Date(), 'P'),
-        publishedTime: format(new Date(), 'p'),
+        publishedDate: add(new Date(), { hours: 6 }),
         publisherUsername: usernameFinder[0]?.username,
         jobTitle,
         companyName,

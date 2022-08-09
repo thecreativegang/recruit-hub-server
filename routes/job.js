@@ -17,7 +17,7 @@ function verifyJWT(req, res, next) {
             // err
             if (err) {
                 console.log(err)
-                return res.status(403).send({ message: 'Forbiddendgfdf' });
+                return res.status(403).send({ message: 'Forbidden' });
             }
             else {
                 req.decoded = decoded;

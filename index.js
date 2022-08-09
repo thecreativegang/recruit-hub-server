@@ -17,7 +17,14 @@ const socket = require("socket.io")
 
 
 //middle wire
-app.use(cors());
+app.use(cors({
+
+  cors: {
+    origin: ["http://localhost:3000", "https://recruit-hub-bbd21.web.app"],
+    Credentials: true,
+
+  }
+}));
 app.use(express.json());
 
 // Connect Database with mongoose
