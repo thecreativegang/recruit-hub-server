@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
-const { postAJob } = require('../controller/jobController')
+const { postAJob, getAllJob } = require('../controller/jobController')
 
 
 
@@ -28,10 +28,11 @@ function verifyJWT(req, res, next) {
     }
 }
 
+// Get all job
+router.get('/', getAllJob);
 
-
-//Check username is valid or not
-router.post('/postJob', postAJob);
+//Post a new job
+router.post('/postJob', verifyJWT, postAJob);
 
 
 
