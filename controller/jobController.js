@@ -32,10 +32,17 @@ exports.postAJob = async (req, res) => {
         tagsArray.push(...single.trim().split(/\s+/))
 
     )
+    let publishedDate;
+    if (new Date().getTimezoneOffset() === -360) {
+        publishedDate = new Date();
+    }
+    else if (new Date().getTimezoneOffset() === 0) {
+        publishedDate = add(new Date(), { hours: 6 });
 
+    }
     //make object to match schema
     const jobData = {
-        publishedDate: add(new Date(), { hours: 6 }),
+        publishedDate: publishedDate,
         publisherUsername: usernameFinder[0]?.username,
         jobTitle,
         companyName,
