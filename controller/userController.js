@@ -53,15 +53,30 @@ exports.get = async (req, res) => {
 
 }
 // get single email by email
-exports.getsingleemail = async (req, res) => {
+exports.getSingleEmail = async (req, res) => {
   const email = req.params.email;
   const query = { email: email };
   const user = await User.findOne(query);
   res.send(user);
 }
+// get search result by query
+exports.getSearchUser = async (req, res) => {
+  const keyword = req.query.search ?
+    {
+      $or: [
+        { username: { $regex: req.query.search, $options: "i" } },
+        { email: { $regex: req.query.search, $options: "i" } },
+      ]
+    } : {};
+
+  const users = await User.find(keyword);
+  // console.log(users);
+  res.send(users);
+}
+
+
 exports.get = async (req, res) => {
   const userInfo = await User.find({ email: req?.decoded?.userData?.email })
-  console.log(req.params.email);
   res.json({
     message: 'successfull',
     status: 200,
