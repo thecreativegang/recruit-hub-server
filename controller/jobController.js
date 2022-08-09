@@ -65,9 +65,11 @@ exports.postAJob = async (req, res) => {
     const postNewJob = new Job(jobData);
     const response = await postNewJob.save(function (err) {
         if (err) {
+            setPublishedDate("")
             res.send(err)
         }
         else {
+            setPublishedDate("")
             res.json({
                 message: 'successfull',
                 status: 200,
@@ -76,7 +78,6 @@ exports.postAJob = async (req, res) => {
 
         }
     })
-    setPublishedDate("")
 };
 
 exports.getAllJob = async (req, res) => {
