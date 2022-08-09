@@ -2,7 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const { sendError } = require('../utilities/errorHelper');
 const jwt = require('jsonwebtoken');
-const PostJob = require('../Schemas/postJobSchema');
+const Job = require('../Schemas/postJobSchema');
 const { format } = require('date-fns');
 const { checkUsername } = require('./checkUsernameController');
 const userSchema = require('../Schemas/userSchema');
@@ -17,7 +17,7 @@ exports.postAJob = async (req, res) => {
     //tags array
     const tagsArray = []
     //Destructure from req.body
-    const { recruitersName, jobTitle, companyName, companySize, vacancies, jobNature, educationalQualification, jobRequirements, tags, deadlineDay, deadlineMonth, deadlineYear
+    const { recruitersName, jobTitle, companyName, companySize, vacancies, jobNature, educationalQualification, jobRequirements, tags, deadlineDay, deadlineMonth, deadlineYear, payRange, jobLocation
     } = req.body;
 
 
@@ -33,7 +33,6 @@ exports.postAJob = async (req, res) => {
 
     )
 
-
     //make object to match schema
     const jobData = {
         publishedDate: format(new Date(), 'P'),
@@ -47,15 +46,16 @@ exports.postAJob = async (req, res) => {
         educationalQualification,
         jobRequirements,
         tags: tagsArray,
+        jobLocation,
         applicationDeadline: {
             deadlineDay,
             deadlineMonth,
             deadlineYear
         },
         recruitersName,
+        payRange
     }
-
-    const postNewJob = new PostJob(jobData);
+    const postNewJob = new Job(jobData);
     const response = await postNewJob.save(function (err) {
         if (err) {
             res.send(err)
@@ -69,4 +69,15 @@ exports.postAJob = async (req, res) => {
 
         }
     })
-}
+};
+
+exports.getAllJob = async (req, res) => {
+    const jobs = await Job.find({})
+    console.log(format(new Date(), 'pppp'))
+    res.status(200)
+    res.json({
+        status: 200,
+        jobs
+    })
+};
+

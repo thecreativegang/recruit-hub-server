@@ -65,6 +65,14 @@ const postJobSchema = mongoose.Schema({
             require: true,
         },
     },
+    payRange: {
+        type: Number,
+        required: true
+    },
+    jobLocation: {
+        type: String,
+        required: true
+    },
 });
 
 module.exports = mongoose.model('Job', postJobSchema);
