@@ -39,7 +39,7 @@ exports.create = async (req, res) => {
     })
   }
   else {
-    res.json({ message: "success" })
+    res.json({ message: "success", accessToken })
   }
 };
 
