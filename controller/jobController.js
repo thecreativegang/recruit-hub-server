@@ -13,8 +13,6 @@ exports.postAJob = async (req, res) => {
 
     //get username
     const usernameFinder = await User.find({ email: req?.decoded?.userData?.email })
-    console.log(usernameFinder)
-    res.status(200);
 
     //tags array
     const tagsArray = []
@@ -31,16 +29,23 @@ exports.postAJob = async (req, res) => {
     toBeSplited.map(single =>
         //prevent duplicate value inside tagsArray
         !tagsArray.includes(single.trim().split(/\s+/)) &&
-        tagsArray.push(single.trim().split(/\s+/))
+        tagsArray.push(...single.trim().split(/\s+/))
 
     )
 
 
     //make object to match schema
     const jobData = {
-        publishedDate: format(new Date(), 'p'),
-        publisher:
-            jobTitle, companyName, companySize, vacancies, jobNature, educationalQualification, jobRequirements,
+        publishedDate: format(new Date(), 'P'),
+        publishedTime: format(new Date(), 'p'),
+        publisherUsername: usernameFinder[0]?.username,
+        jobTitle,
+        companyName,
+        companySize,
+        vacancies,
+        jobNature,
+        educationalQualification,
+        jobRequirements,
         tags: tagsArray,
         applicationDeadline: {
             deadlineDay,
