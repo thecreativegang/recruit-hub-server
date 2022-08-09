@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const { sendError } = require('../utilities/errorHelper');
 const jwt = require('jsonwebtoken');
 const Job = require('../Schemas/postJobSchema');
-const { format } = require('date-fns');
+const { format, add } = require('date-fns');
 const { checkUsername } = require('./checkUsernameController');
 const userSchema = require('../Schemas/userSchema');
 const User = new mongoose.model("User", userSchema);
@@ -73,7 +73,7 @@ exports.postAJob = async (req, res) => {
 
 exports.getAllJob = async (req, res) => {
     const jobs = await Job.find({})
-    console.log(format(new Date(), 'pppp'))
+    console.log(format(add(new Date(), { hours: 6 }), 'Pp'))
     res.status(200)
     res.json({
         status: 200,
