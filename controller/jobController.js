@@ -2,35 +2,60 @@ const express = require('express');
 const mongoose = require('mongoose');
 const { sendError } = require('../utilities/errorHelper');
 const jwt = require('jsonwebtoken');
-const PostJob = require('../Schemas/postJobSchema')
+const Job = require('../Schemas/postJobSchema');
+const { format } = require('date-fns');
+const { checkUsername } = require('./checkUsernameController');
+const userSchema = require('../Schemas/userSchema');
+const User = new mongoose.model("User", userSchema);
+
 
 exports.postAJob = async (req, res) => {
+
+    //get username
+    const usernameFinder = await User.find({ email: req?.decoded?.userData?.email })
 
     //tags array
     const tagsArray = []
     //Destructure from req.body
-    const { recruitersName, jobTitle, companyName, companySize, vacancies, jobNature, educationalQualification, jobRequirements, tags, deadlineDay, deadlineMonth, deadlineYear } = req.body;
+    const { recruitersName, jobTitle, companyName, companySize, vacancies, jobNature, educationalQualification, jobRequirements, tags, deadlineDay, deadlineMonth, deadlineYear, payRange, jobLocation
+    } = req.body;
 
 
     // array of those which will be used to find the post 
     const toBeSplited = [recruitersName, jobTitle, companyName, jobNature, educationalQualification, tags]
 
-    toBeSplited.map(single => tagsArray.push(...single.trim().split(/\s+/)))
 
+    //push tags into tagsArray 
+    toBeSplited.map(single =>
+        //prevent duplicate value inside tagsArray
+        !tagsArray.includes(single.trim().split(/\s+/)) &&
+        tagsArray.push(...single.trim().split(/\s+/))
+
+    )
 
     //make object to match schema
     const jobData = {
-        jobTitle, companyName, companySize, vacancies, jobNature, educationalQualification, jobRequirements,
+        publishedDate: format(new Date(), 'P'),
+        publishedTime: format(new Date(), 'p'),
+        publisherUsername: usernameFinder[0]?.username,
+        jobTitle,
+        companyName,
+        companySize,
+        vacancies,
+        jobNature,
+        educationalQualification,
+        jobRequirements,
         tags: tagsArray,
+        jobLocation,
         applicationDeadline: {
             deadlineDay,
             deadlineMonth,
             deadlineYear
         },
         recruitersName,
+        payRange
     }
-
-    const postNewJob = new PostJob(jobData);
+    const postNewJob = new Job(jobData);
     const response = await postNewJob.save(function (err) {
         if (err) {
             res.send(err)
@@ -39,9 +64,20 @@ exports.postAJob = async (req, res) => {
             res.json({
                 message: 'successfull',
                 status: 200,
-                response
+                response: response
             })
 
         }
     })
-}
+};
+
+exports.getAllJob = async (req, res) => {
+    const jobs = await Job.find({})
+    console.log(format(new Date(), 'pppp'))
+    res.status(200)
+    res.json({
+        status: 200,
+        jobs
+    })
+};
+

@@ -1,6 +1,18 @@
 const mongoose = require('mongoose');
 
 const postJobSchema = mongoose.Schema({
+    publishedDate: {
+        type: String,
+        required: true
+    },
+    publishedTime: {
+        type: String,
+        required: true
+    },
+    publisherUsername: {
+        type: String,
+        required: true
+    },
     recruitersName: {
         type: String,
         required: true
@@ -52,6 +64,14 @@ const postJobSchema = mongoose.Schema({
             type: String,
             require: true,
         },
+    },
+    payRange: {
+        type: Number,
+        required: true
+    },
+    jobLocation: {
+        type: String,
+        required: true
     },
 });
 
