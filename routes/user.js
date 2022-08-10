@@ -20,8 +20,8 @@ function verifyJWT(req, res, next) {
     jwt.verify(token, process.env.JWT_SECRET_KEY, function (err, decoded) {
       // err
       if (err) {
-        console.log(err);
-        return res.status(403).send({ message: 'Forbiddendgfdf' });
+        console.log(err)
+        return res.status(403).send({ message: 'Forbidden' });
       }
       else {
         req.decoded = decoded;

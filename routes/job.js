@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
-const { postAJob, getAllJob } = require('../controller/jobController')
+const { postAJob, getAllJob, filter } = require('../controller/jobController')
 
 
 
@@ -17,7 +17,7 @@ function verifyJWT(req, res, next) {
             // err
             if (err) {
                 console.log(err)
-                return res.status(403).send({ message: 'Forbiddendgfdf' });
+                return res.status(403).send({ message: 'Forbidden' });
             }
             else {
                 req.decoded = decoded;
@@ -33,6 +33,7 @@ router.get('/', getAllJob);
 
 //Post a new job
 router.post('/postJob', verifyJWT, postAJob);
+router.post('/filter', filter);
 
 
 
