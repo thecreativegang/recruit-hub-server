@@ -16,6 +16,9 @@ exports.postAJob = async (req, res) => {
 
     //tags array
     const tagsArray = []
+    // const tagsInLowercase = tagsArray.map(singleTag => {
+    //     singleTag.toLow
+    // })
     //Destructure from req.body
     const { recruitersName, jobTitle, companyName, companySize, vacancies, jobNature, educationalQualification, jobRequirements, tags, deadlineDay, deadlineMonth, deadlineYear, payRange, jobLocation
     } = req.body;
@@ -29,7 +32,7 @@ exports.postAJob = async (req, res) => {
     toBeSplited.map(single =>
         //prevent duplicate value inside tagsArray
         !tagsArray.includes(single.trim().split(/\s+/)) &&
-        tagsArray.push(...single.trim().split(/\s+/))
+        tagsArray.push(...single.toString().toLowerCase().trim().split(/\s+/))
 
     )
 
@@ -94,48 +97,44 @@ exports.filter = async (req, res) => {
             (searchJobNature.length === 0) &&
             (searchCompanySize.length === 0) &&
             (searchPayRange.length === 0)) {
-            return res.json({ message: 'Input not valid' })
+            return res.json({ message: 'No Filter Applied' })
         }
         else {
             async function abc() {
                 if (searchSearchText.length !== 0) {
                     searchData = {
                         ...searchData,
-                        tags: searchSearchText
+                        tags: searchSearchText.toLowerCase()
                     }
                 }
                 if (searchJobNature.length !== 0) {
-                    searchData = { ...searchData, jobNature: searchJobNature }
+                    searchData = {
+                        ...searchData,
+                        jobNature: searchJobNature.toLowerCase()
+                    }
                 }
                 if (searchCompanySize.length !== 0) {
                     searchData = {
                         ...searchData,
-                        companySize: searchCompanySize
+                        companySize: searchCompanySize.toLowerCase()
                     }
                 }
                 if (searchPayRange.length !== 0) {
                     searchData = {
                         ...searchData,
-                        payRange: searchPayRange,
+                        payRange: searchPayRange.toLowerCase(),
                     }
                 }
 
-                // searchData = {
-                //     tags: searchSearchText,
-                //     payRange: searchPayRange,
-                //     jobNature: searchJobNature,
-                //     companySize: searchCompanySize
-                // }
-                // }
-
-                console.log(searchData)
                 const matchedJob = await Job.find(searchData)
                 return matchedJob;
             }
+            console.log(searchData)
             const result = await abc()
             console.log(result)
             res.json({
-                result
+                result,
+                queries: searchData
             })
         }
 
