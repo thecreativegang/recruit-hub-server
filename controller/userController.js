@@ -37,24 +37,6 @@ exports.create = async (req, res) => {
 
 };
 
-
-exports.get = async (req, res) => {
-  const userInfo = await User.find({ email: req?.decoded?.userData?.email })
-  res.json({
-    message: 'successfull',
-    status: 200,
-    userInfo
-  })
-
-}
-
-// get single email by email
-exports.getSingleEmail = async (req, res) => {
-  const email = req.params.email;
-  const query = { email: email };
-  const user = await User.findOne(query);
-  res.send(user);
-}
 // get email by verify email
 exports.get = async (req, res) => {
   const userInfo = await User.find({ email: req?.decoded?.userData?.email })
@@ -65,6 +47,13 @@ exports.get = async (req, res) => {
   })
 
 }
+// get single email by email
+exports.getSingleEmail = async (req, res) => {
+  const email = req.params.email;
+  const query = { email: email };
+  const user = await User.findOne(query);
+  res.send(user);
+}
 
 exports.updateUsername = async (req, res) => {
   const userInfo = await User.updateOne({ email: req?.decoded?.userData?.email }, { username: req?.body?.username })
@@ -74,7 +63,7 @@ exports.updateUsername = async (req, res) => {
 
 }
 
-// get search result by query
+// get search result by query sourav
 exports.getSearchUser = async (req, res) => {
   const keyword = req.query.search ?
     {
