@@ -57,7 +57,6 @@ exports.getsingleemail = async (req, res) => {
 }
 exports.get = async (req, res) => {
   const userInfo = await User.find({ email: req?.decoded?.userData?.email })
-  console.log(req.params.email);
   res.json({
     message: 'successfull',
     status: 200,
