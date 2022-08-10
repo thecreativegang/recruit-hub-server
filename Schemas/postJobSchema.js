@@ -69,6 +69,13 @@ const postJobSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    applicantCount: {
+        type: Number,
+    },
+    viewerCount: {
+        type: Number,
+    },
+
 });
 
 module.exports = mongoose.model('Job', postJobSchema);
