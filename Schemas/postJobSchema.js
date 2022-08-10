@@ -62,7 +62,7 @@ const postJobSchema = mongoose.Schema({
         },
     },
     payRange: {
-        type: Number,
+        type: String,
         required: true
     },
     jobLocation: {

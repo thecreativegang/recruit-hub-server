@@ -85,4 +85,62 @@ exports.getAllJob = async (req, res) => {
         jobs
     })
 };
+exports.filter = async (req, res) => {
+    let searchData = {}
+    const { searchJobNature, searchSearchText, searchCompanySize, searchPayRange } = req?.body;
+    console.log(searchSearchText)
+    const validateNullSearch = async () => {
+        if ((searchSearchText.trim(" ").length === 0) &&
+            (searchJobNature.length === 0) &&
+            (searchCompanySize.length === 0) &&
+            (searchPayRange.length === 0)) {
+            return res.json({ message: 'Input not valid' })
+        }
+        else {
+            async function abc() {
+                if (searchSearchText.length !== 0) {
+                    searchData = {
+                        ...searchData,
+                        tags: searchSearchText
+                    }
+                }
+                if (searchJobNature.length !== 0) {
+                    searchData = { ...searchData, jobNature: searchJobNature }
+                }
+                if (searchCompanySize.length !== 0) {
+                    searchData = {
+                        ...searchData,
+                        companySize: searchCompanySize
+                    }
+                }
+                if (searchPayRange.length !== 0) {
+                    searchData = {
+                        ...searchData,
+                        payRange: searchPayRange,
+                    }
+                }
+
+                // searchData = {
+                //     tags: searchSearchText,
+                //     payRange: searchPayRange,
+                //     jobNature: searchJobNature,
+                //     companySize: searchCompanySize
+                // }
+                // }
+
+                console.log(searchData)
+                const matchedJob = await Job.find(searchData)
+                return matchedJob;
+            }
+            const result = await abc()
+            console.log(result)
+            res.json({
+                result
+            })
+        }
+
+
+    }
+    validateNullSearch();
+};
 

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
-const { postAJob, getAllJob } = require('../controller/jobController')
+const { postAJob, getAllJob, filter } = require('../controller/jobController')
 
 
 
@@ -33,6 +33,7 @@ router.get('/', getAllJob);
 
 //Post a new job
 router.post('/postJob', verifyJWT, postAJob);
+router.post('/filter', filter);
 
 
 
