@@ -74,6 +74,20 @@ exports.updateUsername = async (req, res) => {
 
 }
 
+// get search result by query
+exports.getSearchUser = async (req, res) => {
+  const keyword = req.query.search ?
+    {
+      $or: [
+        { username: { $regex: req.query.search, $options: "i" } },
+        { email: { $regex: req.query.search, $options: "i" } },
+      ]
+    } : {};
+
+  const users = await User.find(keyword);
+  res.send(users);
+}
+
 exports.getAllUsers = async (req, res) => {
   const getAllUSers = await User.find({});
   res.send(getAllUSers);
