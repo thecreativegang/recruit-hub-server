@@ -16,6 +16,9 @@ exports.postAJob = async (req, res) => {
 
     //tags array
     const tagsArray = []
+    // const tagsInLowercase = tagsArray.map(singleTag => {
+    //     singleTag.toLow
+    // })
     //Destructure from req.body
     const { recruitersName, jobTitle, companyName, companySize, vacancies, jobNature, educationalQualification, jobRequirements, tags, deadlineDay, deadlineMonth, deadlineYear, payRange, jobLocation
     } = req.body;
@@ -29,21 +32,19 @@ exports.postAJob = async (req, res) => {
     toBeSplited.map(single =>
         //prevent duplicate value inside tagsArray
         !tagsArray.includes(single.trim().split(/\s+/)) &&
-        tagsArray.push(...single.trim().split(/\s+/))
+        tagsArray.push(...single.toString().toLowerCase().trim().split(/\s+/))
 
     )
-    const [publishedDate, setPublishedDate] = useState("");
-    if (new Date().getTimezoneOffset() === -360) {
-        setPublishedDate(new Date());
-        console.log("no hours added")
-    }
-    else if (new Date().getTimezoneOffset() === 0) {
-        setPublishedDate(add(new Date(), { hours: 6 }));
-        console.log("6 hours added")
-    }
+
+    const publishedDate = (new Date().getTimezoneOffset() === -360)
+        ?
+        new Date()
+        :
+        add(new Date(), { hours: 6 })
+
     //make object to match schema
     const jobData = {
-        publishedDate: publishedDate,
+        publishedDate: publishedDate + "",
         publisherUsername: usernameFinder[0]?.username,
         jobTitle,
         companyName,
@@ -62,20 +63,18 @@ exports.postAJob = async (req, res) => {
         recruitersName,
         payRange
     }
+    console.log(jobData)
     const postNewJob = new Job(jobData);
     const response = await postNewJob.save(function (err) {
         if (err) {
-            setPublishedDate("")
             res.send(err)
         }
         else {
-            setPublishedDate("")
             res.json({
-                message: 'successfull',
+                message: 'Successfull',
                 status: 200,
                 response: response
             })
-
         }
     })
 };
@@ -88,5 +87,59 @@ exports.getAllJob = async (req, res) => {
         status: 200,
         jobs
     })
+};
+exports.filter = async (req, res) => {
+    let searchData = {}
+    const { searchJobNature, searchSearchText, searchCompanySize, searchPayRange } = req?.body;
+    console.log(searchSearchText)
+    const validateNullSearch = async () => {
+        if ((searchSearchText.trim(" ").length === 0) &&
+            (searchJobNature.length === 0) &&
+            (searchCompanySize.length === 0) &&
+            (searchPayRange.length === 0)) {
+            return res.json({ message: 'No Filter Applied' })
+        }
+        else {
+            async function abc() {
+                if (searchSearchText.length !== 0) {
+                    searchData = {
+                        ...searchData,
+                        tags: searchSearchText.toLowerCase()
+                    }
+                }
+                if (searchJobNature.length !== 0) {
+                    searchData = {
+                        ...searchData,
+                        jobNature: searchJobNature.toLowerCase()
+                    }
+                }
+                if (searchCompanySize.length !== 0) {
+                    searchData = {
+                        ...searchData,
+                        companySize: searchCompanySize.toLowerCase()
+                    }
+                }
+                if (searchPayRange.length !== 0) {
+                    searchData = {
+                        ...searchData,
+                        payRange: searchPayRange.toLowerCase(),
+                    }
+                }
+
+                const matchedJob = await Job.find(searchData)
+                return matchedJob;
+            }
+            console.log(searchData)
+            const result = await abc()
+            console.log(result)
+            res.json({
+                result,
+                queries: searchData
+            })
+        }
+
+
+    }
+    validateNullSearch();
 };
 
