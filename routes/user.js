@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 
 
 const { checkUsername } = require('../controller/checkUsernameController');
-const { create, get, updateUsername, getAllUsers, getsingleemail } = require('../controller/userController');
+const { create, get, updateUsername, getAllUsers, getSingleEmail, getSearchUser } = require('../controller/userController');
 
 // const { create } = require('../controller/userController');
 const User = require('../Schemas/userSchema');
@@ -20,7 +20,7 @@ function verifyJWT(req, res, next) {
     jwt.verify(token, process.env.JWT_SECRET_KEY, function (err, decoded) {
       // err
       if (err) {
-        console.log(err)
+        console.log(err);
         return res.status(403).send({ message: 'Forbiddendgfdf' });
       }
       else {
@@ -33,6 +33,9 @@ function verifyJWT(req, res, next) {
 }
 
 // console.log('hello')
+
+// get all search  users
+router.get('/search-user', getSearchUser);
 
 // get all users
 router.get('/', getAllUsers)
@@ -47,8 +50,9 @@ router.post('/create', create);
 // router.post('/userInfo', getUserInfo);
 router.get('/:email', verifyJWT, get);
 
-//get single email by email
-router.get('/email/:email', getsingleemail);
+//get single email by email  
+router.get('/email/:email', getSingleEmail);
+
 
 
 //add username if not any

@@ -44,7 +44,6 @@ exports.create = async (req, res) => {
 
 exports.get = async (req, res) => {
   const userInfo = await User.find({ email: req?.decoded?.userData?.email })
-  console.log(req.params.email);
   res.json({
     message: 'successfull',
     status: 200,
@@ -52,16 +51,17 @@ exports.get = async (req, res) => {
   })
 
 }
+
 // get single email by email
-exports.getsingleemail = async (req, res) => {
+exports.getSingleEmail = async (req, res) => {
   const email = req.params.email;
   const query = { email: email };
   const user = await User.findOne(query);
   res.send(user);
 }
+// get email by verify email
 exports.get = async (req, res) => {
   const userInfo = await User.find({ email: req?.decoded?.userData?.email })
-  console.log(req.params.email);
   res.json({
     message: 'successfull',
     status: 200,
@@ -74,6 +74,20 @@ exports.updateUsername = async (req, res) => {
   res.json({
     userInfo
   })
+}
+
+// get search result by query
+exports.getSearchUser = async (req, res) => {
+  const keyword = req.query.search ?
+    {
+      $or: [
+        { username: { $regex: req.query.search, $options: "i" } },
+        { email: { $regex: req.query.search, $options: "i" } },
+      ]
+    } : {};
+
+  const users = await User.find(keyword);
+  res.send(users);
 }
 
 exports.getAllUsers = async (req, res) => {
