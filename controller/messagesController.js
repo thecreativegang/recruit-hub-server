@@ -2,7 +2,6 @@ const Messages = require("../Schemas/MessageModal");
 
 module.exports.addMessage = async (req, res, next) => {
     try {
-        console.log(req);
         const { from, to, message } = req.body;
         const data = await Messages.create({
             message: { text: message },
@@ -18,9 +17,9 @@ module.exports.addMessage = async (req, res, next) => {
 };
 
 module.exports.getMessages = async (req, res, next) => {
+
     try {
         const { from, to } = req.body;
-
         const messages = await Messages.find({
             users: {
                 $all: [from, to],
@@ -34,7 +33,9 @@ module.exports.getMessages = async (req, res, next) => {
             };
         });
         res.json(projectedMessages);
-    } catch (ex) {
+    }
+
+    catch (ex) {
         next(ex);
     }
 };
