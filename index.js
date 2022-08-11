@@ -6,6 +6,7 @@ const messageRoute = require('./routes/messageRoute');
 const developerRoute = require('./routes/featuredDeveloper.js');
 const skillAssessment = require('./routes/skillAssessment');
 const countryCode = require('./routes/countryCode.js');
+const job = require('./routes/job');
 
 
 const app = express();
@@ -16,7 +17,14 @@ const socket = require("socket.io")
 
 
 //middle wire
-app.use(cors());
+app.use(cors({
+
+  cors: {
+    origin: ["http://localhost:3000", "https://recruit-hub-bbd21.web.app"],
+    Credentials: true,
+
+  }
+}));
 app.use(express.json());
 
 // Connect Database with mongoose
@@ -26,6 +34,7 @@ app.use('/user', userRoute);
 app.use('/developer', developerRoute);
 app.use('/country', countryCode);
 app.use('/skillassessment', skillAssessment);
+app.use('/job', job);
 
 // for chat addmsg
 app.use("/messages", messageRoute);
@@ -48,7 +57,7 @@ const server = app.listen(port, () => {
 // for chat
 const io = socket(server, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: ["http://localhost:3000", "https://recruit-hub-bbd21.web.app"],
     Credentials: true,
 
   },

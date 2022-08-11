@@ -20,8 +20,8 @@ function verifyJWT(req, res, next) {
     jwt.verify(token, process.env.JWT_SECRET_KEY, function (err, decoded) {
       // err
       if (err) {
-        console.log(err);
-        return res.status(403).send({ message: 'Forbiddendgfdf' });
+        console.log(err)
+        return res.status(403).send({ message: 'Forbidden' });
       }
       else {
         req.decoded = decoded;
@@ -32,6 +32,7 @@ function verifyJWT(req, res, next) {
   }
 }
 
+// console.log('hello')
 
 // get all search  users
 router.get('/search-user', getSearchUser);
@@ -46,13 +47,17 @@ router.post('/check-username/:username', checkUsername);
 router.post('/create', create);
 
 //get the user info
+// router.post('/userInfo', getUserInfo);
 router.get('/:email', verifyJWT, get);
 
 //get single email by email  
 router.get('/email/:email', getSingleEmail);
 
 
+
+//add username if not any
 router.post('/username', verifyJWT, updateUsername);
+
 
 
 module.exports = router;
