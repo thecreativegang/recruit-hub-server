@@ -74,17 +74,20 @@ exports.getSearchUser = async (req, res) => {
   const keyword = req.query.search ?
     {
       $or: [
-        { username: { $regex: req.query.search, $options: "i" } },
-        { email: { $regex: req.query.search, $options: "i" } },
+        { username: { $regex: req.query.search, $ne: req?.decoded?.userData?.email, $options: "i" } },
+        { email: { $regex: req.query.search, $ne: req?.decoded?.userData?.email, $options: "i" } },
+        // { email: { $ne: req?.decoded?.userData?.email } },
       ]
     } : {};
+
 
   const users = await User.find(keyword);
   res.send(users);
 }
 
+
 exports.getAllUsers = async (req, res) => {
-  const getAllUSers = await User.find({});
+  const getAllUSers = await User.find({ email: { $ne: req?.decoded?.userData?.email } });
   res.send(getAllUSers);
 }
 
