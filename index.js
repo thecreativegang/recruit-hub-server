@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
 const userRoute = require('./routes/user.js');
+const userRating = require('./routes/userRatingRoute');
 const messageRoute = require('./routes/messageRoute');
 const developerRoute = require('./routes/featuredDeveloper.js');
 const skillAssessment = require('./routes/skillAssessment');
@@ -31,6 +32,7 @@ app.use(express.json());
 require('./db');
 
 app.use('/user', userRoute);
+app.use('/review', userRating);
 app.use('/developer', developerRoute);
 app.use('/country', countryCode);
 app.use('/skillassessment', skillAssessment);
