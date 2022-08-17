@@ -89,5 +89,27 @@ exports.getSearchUser = async (req, res) => {
 exports.getAllUsers = async (req, res) => {
   const getAllUSers = await User.find({ email: { $ne: req?.decoded?.userData?.email } });
   res.send(getAllUSers);
+};
+
+// get search result by query
+exports.addToWishList = async (req, res) => {
+
+  // check if id is already available
+  const checkIdDuplication = await User.find({
+    email: req?.decoded?.userData?.email,
+    wishList: req?.body?.id
+  })
+  const response = await User.updateOne({ email: req?.decoded?.userData?.email, wishList: { "$ne": req?.body?.id } }, { $push: { wishList: req?.body?.id } }).catch(err =>
+    console.log(err)
+  )
+  res.json({
+    response
+  })
+  res.send().status(200)
 }
+
+exports.removeFromWishList = async (req, res) => {
+  const getAllUSers = await User.find({});
+  res.send(getAllUSers);
+};
 

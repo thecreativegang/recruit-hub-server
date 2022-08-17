@@ -4,10 +4,11 @@ const jwt = require('jsonwebtoken');
 
 
 const { checkUsername } = require('../controller/checkUsernameController');
-const { create, get, updateUsername, getAllUsers, getSingleEmail, getSearchUser } = require('../controller/userController');
+const { create, get, updateUsername, getAllUsers, getSingleEmail, getSearchUser, removeFromWishList, addToWishList } = require('../controller/userController');
 
 // const { create } = require('../controller/userController');
 const User = require('../Schemas/userSchema');
+const decodeToken = require('../utilities/decodeToken');
 
 //JWT Verify
 function verifyJWT(req, res, next) {
@@ -47,11 +48,19 @@ router.post('/check-username/:username', checkUsername);
 router.post('/create', create);
 
 //get the user info
-// router.post('/userInfo', getUserInfo);
 router.get('/:email', verifyJWT, get);
 
 //get single email by email  
 router.get('/email/:email', getSingleEmail);
+
+//Get all wishlisted jobs
+router.get('/wishList', addToWishList);
+
+//add new job to wishlist
+router.post('/wishList', decodeToken, addToWishList);
+
+//Add jobs to wishList
+router.delete('/wishList', removeFromWishList);
 
 
 

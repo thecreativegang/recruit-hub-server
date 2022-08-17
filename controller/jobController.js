@@ -6,6 +6,7 @@ const Job = require('../Schemas/postJobSchema');
 const { format, add } = require('date-fns');
 const { checkUsername } = require('./checkUsernameController');
 const userSchema = require('../Schemas/userSchema');
+const findUsername = require('../utilities/findUsername');
 const User = new mongoose.model("User", userSchema);
 
 
@@ -13,14 +14,13 @@ exports.postAJob = async (req, res) => {
 
     //get username
     const usernameFinder = await User.find({ email: req?.decoded?.userData?.email })
-
     //tags array
     const tagsArray = []
     // const tagsInLowercase = tagsArray.map(singleTag => {
     //     singleTag.toLow
     // })
     //Destructure from req.body
-    const { recruitersName, jobTitle, companyName, companySize, vacancies, jobNature, educationalQualification, jobRequirements, tags, deadlineDay, deadlineMonth, deadlineYear, payRange, jobLocation
+    const { recruitersName, jobTitle, companyName, companySize, vacancies, jobNature, educationalQualification, jobRequirements, tags, deadlineDay, deadlineMonth, deadlineYear, payRange, jobLocation,
     } = req.body;
 
 
@@ -45,7 +45,7 @@ exports.postAJob = async (req, res) => {
     //make object to match schema
     const jobData = {
         publishedDate: publishedDate + "",
-        publisherUsername: usernameFinder[0]?.username,
+        publisherUsername: await findUsername(req?.decoded?.userData?.email),
         jobTitle,
         companyName,
         companySize,
@@ -89,13 +89,15 @@ exports.getAllJob = async (req, res) => {
     })
 };
 exports.filter = async (req, res) => {
+
     let searchData = {}
-    const { searchJobNature, searchSearchText, searchCompanySize, searchPayRange } = req?.body;
+    const { searchJobNature, searchSearchText, searchCompanySize, searchPayRange, searchShowAllorOnlyMine } = req?.body;
     console.log(searchSearchText)
     const validateNullSearch = async () => {
         if ((searchSearchText.trim(" ").length === 0) &&
             (searchJobNature.length === 0) &&
             (searchCompanySize.length === 0) &&
+            (searchShowAllorOnlyMine.length === 0) &&
             (searchPayRange.length === 0)) {
             return res.json({ message: 'No Filter Applied' })
         }
@@ -125,13 +127,19 @@ exports.filter = async (req, res) => {
                         payRange: searchPayRange.toLowerCase(),
                     }
                 }
+                if (searchShowAllorOnlyMine === 'mine') {
+                    searchData = {
+                        ...searchData,
+                        publisherUsername: await findUsername(req?.decoded?.userData?.email),
+                    }
+                }
 
+                console.log('Search Data', searchData)
                 const matchedJob = await Job.find(searchData)
                 return matchedJob;
             }
-            console.log(searchData)
             const result = await abc()
-            console.log(result)
+            // console.log(result)
             res.json({
                 result,
                 queries: searchData
