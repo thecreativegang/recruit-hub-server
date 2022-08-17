@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const { format } = require('date-fns');
 
 const resourceSchema = mongoose.Schema({
-    registrationDate: {
+    uploadDate: {
         type: String,
         default: format(new Date(), 'PP'),
     },
