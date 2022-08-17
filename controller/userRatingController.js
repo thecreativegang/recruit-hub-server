@@ -10,7 +10,6 @@ exports.getUserReview = async (req, res) => {
 }
 
 exports.postUserReview = async (req, res) => {
-    console.log(req.body);
     try {
         const { message, rating } = req.body;
         const data = await Reviews.create({
