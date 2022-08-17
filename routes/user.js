@@ -47,7 +47,6 @@ router.post('/check-username/:username', checkUsername);
 router.post('/create', create);
 
 //get the user info
-// router.post('/userInfo', getUserInfo);
 router.get('/:email', verifyJWT, get);
 
 //get single email by email  
