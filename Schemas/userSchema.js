@@ -24,6 +24,10 @@ const userSchema = mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  wishList: {
+    type: Array,
+
+  },
 });
 
 module.exports = userSchema;
