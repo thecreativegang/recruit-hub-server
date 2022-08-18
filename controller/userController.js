@@ -10,7 +10,6 @@ const generateToken = (userData) => {
 };
 exports.create = async (req, res) => {
   const userData = req.body;
-  console.log(userData)
   const accessToken = await generateToken({ userData });
 
   //check if email is already registered or not
@@ -69,7 +68,7 @@ exports.updateUsername = async (req, res) => {
   })
 }
 
-// get search result by query sourav
+// get search result by query {sourav}
 exports.getSearchUser = async (req, res) => {
   const keyword = req.query.search ?
     {

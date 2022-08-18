@@ -21,7 +21,6 @@ exports.deleteuser = async (req, res) => {
         res.json({ isAvailable: true })
     }
     else {
-
         res.json({ isAvailable: false })
     }
 

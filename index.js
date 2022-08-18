@@ -2,11 +2,13 @@ const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
 const userRoute = require('./routes/user.js');
+const userRating = require('./routes/userRatingRoute');
 const messageRoute = require('./routes/messageRoute');
 const developerRoute = require('./routes/featuredDeveloper.js');
 const skillAssessment = require('./routes/skillAssessment');
 const countryCode = require('./routes/countryCode.js');
 const job = require('./routes/job');
+const resource = require('./routes/resource');
 
 
 const app = express();
@@ -31,10 +33,12 @@ app.use(express.json());
 require('./db');
 
 app.use('/user', userRoute);
+app.use('/review', userRating);
 app.use('/developer', developerRoute);
 app.use('/country', countryCode);
 app.use('/skillassessment', skillAssessment);
 app.use('/job', job);
+app.use('/resource', resource);
 
 // for chat addmsg
 app.use("/messages", messageRoute);
@@ -54,6 +58,7 @@ const server = app.listen(port, () => {
   console.log(`Listening to port ${port}`);
 });
 
+
 // for chat
 const io = socket(server, {
   cors: {
@@ -63,23 +68,29 @@ const io = socket(server, {
   },
 });
 
-global.onlineUsers = new Map();
+
 
 io.on("connection", (socket) => {
 
-  global.chatSocket = socket;
-  socket.on("add-user", (userId) => {
-    onlineUsers.set(userId, socket.id);
-  });
+  console.log(`User Connected: ${socket.id}`);
 
-  socket.on("send-msg", (data) => {
-    // console.log(data);
-    const sendUserSocket = onlineUsers.get(data.to);
-    if (sendUserSocket) {
-      socket.to(sendUserSocket).emit("msg-recieve", data.msg);
-    }
-  });
+  // global.chatSocket = socket;
+  // socket.on("add-user", (userId) => {
+  //   onlineUsers.set(userId, socket.id);
+  // });
 
+  // socket.on("send-msg", (data) => {
+  //   // console.log(data);
+  //   const sendUserSocket = onlineUsers.get(data.to);
+  //   if (sendUserSocket) {
+  //     socket.to(sendUserSocket).emit("msg-recieve", data.msg);
+  //   }
+  // });
+
+
+  socket.on("disconnect", () => {
+    console.log("User Disconnected", socket.id);
+  });
 });
 
 
