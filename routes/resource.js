@@ -3,7 +3,7 @@ const router = express.Router();
 const jwt = require('jsonwebtoken');
 
 
-const { getAllResource, postAllResource } = require('../controller/resourceController');
+const { getAllResource, postAllResource, deleteResource, updateResource } = require('../controller/resourceController');
 
 // const { create } = require('../controller/userController');
 
@@ -32,10 +32,16 @@ function verifyJWT(req, res, next) {
 
 // get resource
 
-router.get('/', getAllResource)
+router.get('/', getAllResource);
 
 // post resource
-router.post('/post', postAllResource)
+router.post('/post', postAllResource);
+
+// delete resource
+router.post('/delete', deleteResource);
+
+// update resource
+router.post('/update', updateResource);
 
 
 module.exports = router;

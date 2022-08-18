@@ -16,17 +16,31 @@ exports.getAllResource = async (req, res) => {
 exports.postAllResource = async (req, res) => {
     try {
         const { link, subject, topic } = req.body;
-        console.log(link, subject, topic);
 
         const data = await Resource.create({
             link, subject, topic,
         });
 
-        if (data) return res.json({ msg: "rating  added successfully." });
-        else return res.json({ msg: "Failed to add rating to the database" });
+        if (data) return res.json({ msg: "resource  added successfully." });
+        else return res.json({ msg: "Failed to add resource to the database" });
     }
     catch (ex) {
         console.log(ex);
     }
 }
 
+exports.deleteResource = async (req, res) => {
+
+    const result = await Resource.deleteOne({})
+
+};
+
+exports.updateResource = async (req, res) => {
+    const { link, subject, topic, _id } = req.body;
+
+    const resource = await Resource.updateOne({ _id }, { link, subject, topic })
+    res.json({
+        resource
+    })
+
+};

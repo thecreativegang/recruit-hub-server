@@ -69,7 +69,7 @@ exports.updateUsername = async (req, res) => {
   })
 }
 
-// get search result by query sourav
+// get search result by query {sourav}
 exports.getSearchUser = async (req, res) => {
   const keyword = req.query.search ?
     {
