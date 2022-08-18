@@ -58,6 +58,7 @@ const server = app.listen(port, () => {
   console.log(`Listening to port ${port}`);
 });
 
+
 // for chat
 const io = socket(server, {
   cors: {
@@ -67,23 +68,29 @@ const io = socket(server, {
   },
 });
 
-global.onlineUsers = new Map();
+
 
 io.on("connection", (socket) => {
 
-  global.chatSocket = socket;
-  socket.on("add-user", (userId) => {
-    onlineUsers.set(userId, socket.id);
-  });
+  console.log(`User Connected: ${socket.id}`);
 
-  socket.on("send-msg", (data) => {
-    // console.log(data);
-    const sendUserSocket = onlineUsers.get(data.to);
-    if (sendUserSocket) {
-      socket.to(sendUserSocket).emit("msg-recieve", data.msg);
-    }
-  });
+  // global.chatSocket = socket;
+  // socket.on("add-user", (userId) => {
+  //   onlineUsers.set(userId, socket.id);
+  // });
 
+  // socket.on("send-msg", (data) => {
+  //   // console.log(data);
+  //   const sendUserSocket = onlineUsers.get(data.to);
+  //   if (sendUserSocket) {
+  //     socket.to(sendUserSocket).emit("msg-recieve", data.msg);
+  //   }
+  // });
+
+
+  socket.on("disconnect", () => {
+    console.log("User Disconnected", socket.id);
+  });
 });
 
 

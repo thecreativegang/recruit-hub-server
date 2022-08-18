@@ -21,7 +21,7 @@ exports.postAllResource = async (req, res) => {
             link, subject, topic,
         });
 
-        if (data) return res.json({ msg: "resource  added successfully." });
+        if (data) return res.json({ msg: "resource  added successfully.", updateCount: "1" });
         else return res.json({ msg: "Failed to add resource to the database" });
     }
     catch (ex) {

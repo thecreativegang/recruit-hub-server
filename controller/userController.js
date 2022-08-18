@@ -10,7 +10,6 @@ const generateToken = (userData) => {
 };
 exports.create = async (req, res) => {
   const userData = req.body;
-  console.log(userData)
   const accessToken = await generateToken({ userData });
 
   //check if email is already registered or not
