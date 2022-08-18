@@ -48,6 +48,16 @@ app.get('/', async (req, res) => {
 
 
 
+// YouTube thumbnail request handler
+app.get('/video/:watchCode', (req, res) => {
+  var watchCode = req.params.watchCode;
+  var url = `https://www.youtube.com/watch?v=${watchCode}`;
+  var data = youtubeThumbnail(url);
+  var thumbnail = data.high.url;
+  res.send(`<img src="${thumbnail}" alt="Thumbnail" />`);
+});
+
+
 
 
 const server = app.listen(port, () => {
