@@ -57,7 +57,7 @@ router.get('/email/:email', getSingleEmail);
 router.get('/wishList', addToWishList);
 
 //add new job to wishlist
-router.post('/wishList', decodeToken, addToWishList);
+router.post('/wishList', verifyJWT, addToWishList);
 
 //Add jobs to wishList
 router.delete('/wishList', removeFromWishList);

@@ -7,6 +7,7 @@ const { format, add } = require('date-fns');
 const { checkUsername } = require('./checkUsernameController');
 const userSchema = require('../Schemas/userSchema');
 const findUsername = require('../utilities/findUsername');
+const { ObjectID } = require('bson');
 const User = new mongoose.model("User", userSchema);
 
 
@@ -88,6 +89,8 @@ exports.getAllJob = async (req, res) => {
         jobs
     })
 };
+
+//Filter job
 exports.filter = async (req, res) => {
 
     let searchData = {}
@@ -149,5 +152,13 @@ exports.filter = async (req, res) => {
 
     }
     validateNullSearch();
+};
+
+//Apply to a job
+exports.applyJob = async (req, res) => {
+    const { id } = req.params;
+    console.log('id', id)
+    console.log('req.decoded', await req?.decoded)
+    // const response = await Job.updateOne({ _id=ObjectID(id) },{$push:{applications:}})
 };
 
