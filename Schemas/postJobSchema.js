@@ -69,8 +69,8 @@ const postJobSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    applicantCount: {
-        type: Number,
+    applications: {
+        type: Array,
     },
     viewerCount: {
         type: Number,
