@@ -43,7 +43,7 @@ exports.create = async (req, res) => {
   }
 };
 
-
+// get email by verify email
 exports.get = async (req, res) => {
   const userInfo = await User.find({ email: req?.decoded?.userData?.email })
   res.json({
@@ -61,16 +61,7 @@ exports.getSingleEmail = async (req, res) => {
   const user = await User.findOne(query);
   res.send(user);
 }
-// get email by verify email
-exports.get = async (req, res) => {
-  const userInfo = await User.find({ email: req?.decoded?.userData?.email })
-  res.json({
-    message: 'successfull',
-    status: 200,
-    userInfo
-  })
 
-}
 exports.updateUsername = async (req, res) => {
   const userInfo = await User.updateOne({ email: req?.decoded?.userData?.email }, { username: req?.body?.username })
   res.json({
@@ -78,22 +69,25 @@ exports.updateUsername = async (req, res) => {
   })
 }
 
-// get search result by query
+// get search result by query sourav
 exports.getSearchUser = async (req, res) => {
   const keyword = req.query.search ?
     {
       $or: [
-        { username: { $regex: req.query.search, $options: "i" } },
-        { email: { $regex: req.query.search, $options: "i" } },
+        { username: { $regex: req.query.search, $ne: req?.decoded?.userData?.email, $options: "i" } },
+        { email: { $regex: req.query.search, $ne: req?.decoded?.userData?.email, $options: "i" } },
+        // { email: { $ne: req?.decoded?.userData?.email } },
       ]
     } : {};
+
 
   const users = await User.find(keyword);
   res.send(users);
 }
 
+
 exports.getAllUsers = async (req, res) => {
-  const getAllUSers = await User.find({});
+  const getAllUSers = await User.find({ email: { $ne: req?.decoded?.userData?.email } });
   res.send(getAllUSers);
 };
 

@@ -36,10 +36,10 @@ function verifyJWT(req, res, next) {
 // console.log('hello')
 
 // get all search  users
-router.get('/search-user', getSearchUser);
+router.get('/search-user', verifyJWT, getSearchUser);
 
 // get all users
-router.get('/', getAllUsers)
+router.get('/', verifyJWT, getAllUsers)
 
 //Check username is valid or not
 router.post('/check-username/:username', checkUsername);
