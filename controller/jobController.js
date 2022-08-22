@@ -11,6 +11,7 @@ const { ObjectID } = require('bson');
 const User = new mongoose.model("User", userSchema);
 
 
+
 exports.postAJob = async (req, res) => {
 
     //get username
@@ -81,9 +82,17 @@ exports.postAJob = async (req, res) => {
 };
 
 exports.getAllJob = async (req, res) => {
-    const jobs = await Job.find({})
-    console.log(format(add(new Date(), { hours: 6 }), 'PPpp'))
-    res.status(200)
+
+    const hiddenJobs = [];
+    const allJobsArray = [];
+    const jobsToBeSent = []
+    const findTheuser = await User.findOne({ email: req?.decoded?.userData?.email })
+    findTheuser.hiddenJobs.map(hiddenJob => hiddenJobs.push(hiddenJob))
+
+    const allJobs = await Job.find();
+    allJobs.map(singleJob => allJobsArray.push(singleJob._id))
+    const jobs = await Job.find({ _id: { $nin: hiddenJobs } })
+    // jobs.map(job =>)
     res.json({
         status: 200,
         jobs

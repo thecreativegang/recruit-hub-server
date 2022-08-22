@@ -108,9 +108,18 @@ exports.addToWishList = async (req, res) => {
   res.send().status(200)
 }
 
+
+//Remove Item from wishList
 exports.removeFromWishList = async (req, res) => {
   const getAllUSers = await User.find({});
   res.send(getAllUSers);
 };
 
-// 
+
+//hide job
+exports.hideJob = async (req, res) => {
+  const response = await User.updateOne({ email: req?.decoded?.userData?.email, hiddenJobs: { "$ne": req?.params?.id } }, { $push: { hiddenJobs: req?.params?.id } })
+  res.send(response)
+};
+
+
