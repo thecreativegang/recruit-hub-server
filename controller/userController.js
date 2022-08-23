@@ -52,7 +52,6 @@ exports.get = async (req, res) => {
   })
 
 }
-
 // get single email by email
 exports.getSingleEmail = async (req, res) => {
   const email = req.params.email;
@@ -84,12 +83,24 @@ exports.getSearchUser = async (req, res) => {
   res.send(users);
 }
 
-
+// get all user
 exports.getAllUsers = async (req, res) => {
   const getAllUSers = await User.find({ email: { $ne: req?.decoded?.userData?.email } });
   res.send(getAllUSers);
 };
 
+
+// get all admin
+exports.getAdmin = async (req, res) => {
+  const getAllAdmin = await User.find({ isAdmin: true });
+  res.send(getAllAdmin);
+}
+
+// get all developer
+exports.getAllDeveloper = async (req, res) => {
+  const AllDeveloper = await User.find({ accountType: "developer" });
+  res.send(AllDeveloper);
+}
 // get search result by query
 exports.addToWishList = async (req, res) => {
 
@@ -107,8 +118,31 @@ exports.addToWishList = async (req, res) => {
   res.send().status(200)
 }
 
+
+//Remove Item from wishList
 exports.removeFromWishList = async (req, res) => {
   const getAllUSers = await User.find({});
   res.send(getAllUSers);
 };
+
+
+//hide job
+exports.hideJob = async (req, res) => {
+  const response = await User.updateOne({ email: req?.decoded?.userData?.email, hiddenJobs: { "$ne": req?.params?.id } }, { $push: { hiddenJobs: req?.params?.id } })
+  res.send(response)
+};
+
+//Remove Item from hidden Jobs
+exports.removeFromHidden = async (req, res) => {
+  const bookmarked = [];
+  // find  and push the bookmarked jobs ID
+  const loadeduser = await User.findOne({ email: req?.decoded?.userData?.email })
+  loadeduser?.hiddenJobs?.map(singleJob => bookmarked.push(singleJob))
+
+  const hiddenJobs = await Job.find({ _id: Object(bookmarked) })
+  res.json({
+    hiddenJobs
+  })
+};
+
 

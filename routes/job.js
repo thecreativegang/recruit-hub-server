@@ -1,40 +1,33 @@
 const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
-const { postAJob, getAllJob, filter } = require('../controller/jobController');
+const { postAJob, getAllJob, filter, applyJob, bookmarkedJobs, hiddenJobs } = require('../controller/jobController');
 const decodeToken = require('../utilities/decodeToken');
+const verifyJWT = require('../utilities/verifyJWT');
 
 
 
-//JWT Verify
-function verifyJWT(req, res, next) {
-    authHeader = req?.headers.authorization;
-    if (!authHeader) {
-        return res.status(401).send({ message: 'UnAuthorized Access' });
-    }
-    else {
-        const token = authHeader.split(' ')[1];
-        jwt.verify(token, process.env.JWT_SECRET_KEY, function (err, decoded) {
-            // err
-            if (err) {
-                console.log(err)
-                return res.status(403).send({ message: 'Forbidden' });
-            }
-            else {
-                req.decoded = decoded;
-                next();
-                return;
-            }
-        });
-    }
-}
 
 // Get all job
-router.get('/', getAllJob);
+router.get('/', decodeToken, getAllJob);
 
 //Post a new job
 router.post('/postJob', verifyJWT, postAJob);
+
+//Filter Job
 router.post('/filter', decodeToken, filter);
+
+//apply to a job
+router.post('/apply/:id', decodeToken, applyJob);
+
+//Load Bookmarked Job
+router.get('/bookmarked', verifyJWT, bookmarkedJobs);
+
+//Load hidden Job
+router.get('/hidden', verifyJWT, hiddenJobs);
+
+
+
 
 
 

@@ -28,6 +28,14 @@ const userSchema = mongoose.Schema({
     type: Array,
 
   },
+  hiddenJobs: {
+    type: Array,
+
+  },
+  bookmarkedJobs: {
+    type: Array,
+
+  },
 });
 
 module.exports = userSchema;
