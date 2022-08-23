@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 
 
 const { checkUsername } = require('../controller/checkUsernameController');
-const { create, get, updateUsername, getAllUsers, getSingleEmail, getSearchUser, removeFromWishList, addToWishList, hideJob } = require('../controller/userController');
+const { create, get, updateUsername, getAllUsers, getSingleEmail, getSearchUser, removeFromWishList, addToWishList, hideJob, removeFromHidden } = require('../controller/userController');
 
 // const { create } = require('../controller/userController');
 const User = require('../Schemas/userSchema');
@@ -48,5 +48,8 @@ router.post('/username', verifyJWT, updateUsername);
 
 // Hide a job
 router.post('/hideJob/:id', verifyJWT, hideJob);
+
+// Hide a job
+router.post('/removeFromHidden/:id', verifyJWT, removeFromHidden);
 
 module.exports = router;

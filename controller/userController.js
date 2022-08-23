@@ -122,4 +122,17 @@ exports.hideJob = async (req, res) => {
   res.send(response)
 };
 
+//Remove Item from hidden Jobs
+exports.removeFromHidden = async (req, res) => {
+  const bookmarked = [];
+  // find  and push the bookmarked jobs ID
+  const loadeduser = await User.findOne({ email: req?.decoded?.userData?.email })
+  loadeduser?.hiddenJobs?.map(singleJob => bookmarked.push(singleJob))
+
+  const hiddenJobs = await Job.find({ _id: Object(bookmarked) })
+  res.json({
+    hiddenJobs
+  })
+};
+
 
