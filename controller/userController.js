@@ -10,7 +10,6 @@ const generateToken = (userData) => {
 };
 exports.create = async (req, res) => {
   const userData = req.body;
-  console.log(userData)
   const accessToken = await generateToken({ userData });
 
   //check if email is already registered or not
@@ -53,7 +52,6 @@ exports.get = async (req, res) => {
   })
 
 }
-
 // get single email by email
 exports.getSingleEmail = async (req, res) => {
   const email = req.params.email;
@@ -69,7 +67,7 @@ exports.updateUsername = async (req, res) => {
   })
 }
 
-// get search result by query sourav
+// get search result by query {sourav}
 exports.getSearchUser = async (req, res) => {
   const keyword = req.query.search ?
     {
@@ -85,12 +83,24 @@ exports.getSearchUser = async (req, res) => {
   res.send(users);
 }
 
-
+// get all user
 exports.getAllUsers = async (req, res) => {
   const getAllUSers = await User.find({ email: { $ne: req?.decoded?.userData?.email } });
   res.send(getAllUSers);
 };
 
+
+// get all admin
+exports.getAdmin = async (req, res) => {
+  const getAllAdmin = await User.find({ isAdmin: true });
+  res.send(getAllAdmin);
+}
+
+// get all developer
+exports.getAllDeveloper = async (req, res) => {
+  const AllDeveloper = await User.find({ accountType: "developer" });
+  res.send(AllDeveloper);
+}
 // get search result by query
 exports.addToWishList = async (req, res) => {
 
@@ -114,6 +124,7 @@ exports.removeFromWishList = async (req, res) => {
   const getAllUSers = await User.find({});
   res.send(getAllUSers);
 };
+<<<<<<< HEAD
 
 
 //hide job
@@ -136,3 +147,5 @@ exports.removeFromHidden = async (req, res) => {
 };
 
 
+=======
+>>>>>>> 4931dfcd8d1c1d4dcc41079348a6e1276bdb3841
