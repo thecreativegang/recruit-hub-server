@@ -124,7 +124,6 @@ exports.removeFromWishList = async (req, res) => {
   const getAllUSers = await User.find({});
   res.send(getAllUSers);
 };
-<<<<<<< HEAD
 
 
 //hide job
@@ -147,5 +146,3 @@ exports.removeFromHidden = async (req, res) => {
 };
 
 
-=======
->>>>>>> 4931dfcd8d1c1d4dcc41079348a6e1276bdb3841
