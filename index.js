@@ -74,9 +74,8 @@ const io = socket(server, {
 io.on("connection", (socket) => {
 
   socket.on("send-msg", (msg) => {
-    console.log(msg)
 
-    // io.emit("msg-recieve", msg)
+    io.emit("msg-transfer", msg)
   })
 
   // socket.on("add-user", (userId) => {
