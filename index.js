@@ -70,28 +70,31 @@ const io = socket(server, {
 
 
 
+
 io.on("connection", (socket) => {
 
-  console.log(`User Connected: ${socket.id}`);
+  socket.on("send-msg", (msg) => {
+    console.log(msg)
 
-  // global.chatSocket = socket;
+    // io.emit("msg-recieve", msg)
+  })
+
   // socket.on("add-user", (userId) => {
-  //   onlineUsers.set(userId, socket.id);
+  //   console.log(userId)
+  //  user(userId, socket.id);
   // });
 
   // socket.on("send-msg", (data) => {
-  //   // console.log(data);
-  //   const sendUserSocket = onlineUsers.get(data.to);
-  //   if (sendUserSocket) {
-  //     socket.to(sendUserSocket).emit("msg-recieve", data.msg);
+  //   console.log(data)
+  //   if (data) {
+  //     socket.to(data).emit("msg-recieve", data.msg);
   //   }
   // });
 
-
-  socket.on("disconnect", () => {
-    console.log("User Disconnected", socket.id);
-  });
 });
+
+
+
 
 
 // io.on("connection", (socket) => {
@@ -100,7 +103,7 @@ io.on("connection", (socket) => {
 //   socket.on("setup", (userData) => {
 //     socket.join(userData._id);
 //     socket.emit("Connected");
-//     console.log(`User with ID: ${socket.id} joined room: ${data}`);
+//     console.log(`U+ser with ID: ${socket.id} joined room: ${data}`);
 
 //     socket.on("join_room", (room) => {
 //       socket.join(room);
@@ -123,10 +126,6 @@ io.on("connection", (socket) => {
 //     socket.to(data.room).emit("receive_message", data);
 //   });
 
-
-//   socket.on("disconnect", () => {
-//     console.log("User Disconnected", socket.id);
-//   });
 
 
 // });

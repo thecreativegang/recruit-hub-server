@@ -52,7 +52,6 @@ exports.get = async (req, res) => {
   })
 
 }
-
 // get single email by email
 exports.getSingleEmail = async (req, res) => {
   const email = req.params.email;
@@ -84,12 +83,24 @@ exports.getSearchUser = async (req, res) => {
   res.send(users);
 }
 
-
+// get all user
 exports.getAllUsers = async (req, res) => {
   const getAllUSers = await User.find({ email: { $ne: req?.decoded?.userData?.email } });
   res.send(getAllUSers);
 };
 
+
+// get all admin
+exports.getAdmin = async (req, res) => {
+  const getAllAdmin = await User.find({ isAdmin: true });
+  res.send(getAllAdmin);
+}
+
+// get all developer
+exports.getAllDeveloper = async (req, res) => {
+  const AllDeveloper = await User.find({ accountType: "developer" });
+  res.send(AllDeveloper);
+}
 // get search result by query
 exports.addToWishList = async (req, res) => {
 
@@ -111,5 +122,3 @@ exports.removeFromWishList = async (req, res) => {
   const getAllUSers = await User.find({});
   res.send(getAllUSers);
 };
-
-// 
