@@ -7,7 +7,10 @@ const { format, add } = require('date-fns');
 const { checkUsername } = require('./checkUsernameController');
 const userSchema = require('../Schemas/userSchema');
 const findUsername = require('../utilities/findUsername');
+const { ObjectID } = require('bson');
+const { find } = require('../Schemas/postJobSchema');
 const User = new mongoose.model("User", userSchema);
+
 
 
 exports.postAJob = async (req, res) => {
@@ -80,14 +83,24 @@ exports.postAJob = async (req, res) => {
 };
 
 exports.getAllJob = async (req, res) => {
-    const jobs = await Job.find({})
-    console.log(format(add(new Date(), { hours: 6 }), 'PPpp'))
-    res.status(200)
+
+    const hiddenJobs = [];
+    const allJobsArray = [];
+    const jobsToBeSent = []
+    const findTheuser = await User.findOne({ email: req?.decoded?.userData?.email })
+    findTheuser.hiddenJobs.map(hiddenJob => hiddenJobs.push(hiddenJob))
+
+    const allJobs = await Job.find();
+    allJobs.map(singleJob => allJobsArray.push(singleJob._id))
+    const jobs = await Job.find({ _id: { $nin: hiddenJobs } })
+    // jobs.map(job =>)
     res.json({
         status: 200,
         jobs
     })
 };
+
+//Filter job
 exports.filter = async (req, res) => {
 
     let searchData = {}
@@ -149,5 +162,33 @@ exports.filter = async (req, res) => {
 
     }
     validateNullSearch();
+};
+
+//Apply to a job
+exports.applyJob = async (req, res) => {
+    const { id } = req.params;
+    console.log('id', id)
+    console.log('req.decoded', await req?.decoded)
+    // const response = await Job.updateOne({ _id=ObjectID(id) },{$push:{applications:}})
+};
+
+//Load bookmarked Jobs
+exports.bookmarkedJobs = async (req, res) => {
+    const bookmarked = [];
+    const loadedBookmarked = await User.find({ email: req?.decoded?.userData?.email })
+    console.log(loadedBookmarked?.bookmarkedJobs)
+};
+
+//Load hiddenJobs Jobs
+exports.hiddenJobs = async (req, res) => {
+    const bookmarked = [];
+    // find  and push the bookmarked jobs ID
+    const loadeduser = await User.findOne({ email: req?.decoded?.userData?.email })
+    loadeduser?.hiddenJobs?.map(singleJob => bookmarked.push(singleJob))
+
+    const hiddenJobs = await Job.find({ _id: Object(bookmarked) })
+    res.json({
+        hiddenJobs
+    })
 };
 

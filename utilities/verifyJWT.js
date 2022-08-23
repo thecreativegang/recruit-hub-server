@@ -1,19 +1,20 @@
 const jwt = require('jsonwebtoken');
-async function decodeToken(req, res, next) {
+
+//JWT Verify
+function verifyJWT(req, res, next) {
+    console.log('req.body', req.body)
+    console.log('req.headers', req.headers)
     authHeader = req?.headers?.authorization;
     if (!authHeader) {
-        console.log('Header not found')
-        next();
-        return null
+        return res.status(401).send({ message: 'UnAuthorized Access' });
     }
     else {
         const token = authHeader.split(' ')[1];
         jwt.verify(token, process.env.JWT_SECRET_KEY, function (err, decoded) {
             // err
             if (err) {
-                console.log('err', err)
-                next();
-                return err.message
+                console.log(err)
+                return res.status(403).send({ message: 'Forbidden' });
             }
             else {
                 req.decoded = decoded;
@@ -23,4 +24,5 @@ async function decodeToken(req, res, next) {
         });
     }
 }
-module.exports = decodeToken
+
+module.exports = verifyJWT
