@@ -118,7 +118,31 @@ exports.addToWishList = async (req, res) => {
   res.send().status(200)
 }
 
+
+//Remove Item from wishList
 exports.removeFromWishList = async (req, res) => {
   const getAllUSers = await User.find({});
   res.send(getAllUSers);
 };
+
+
+//hide job
+exports.hideJob = async (req, res) => {
+  const response = await User.updateOne({ email: req?.decoded?.userData?.email, hiddenJobs: { "$ne": req?.params?.id } }, { $push: { hiddenJobs: req?.params?.id } })
+  res.send(response)
+};
+
+//Remove Item from hidden Jobs
+exports.removeFromHidden = async (req, res) => {
+  const bookmarked = [];
+  // find  and push the bookmarked jobs ID
+  const loadeduser = await User.findOne({ email: req?.decoded?.userData?.email })
+  loadeduser?.hiddenJobs?.map(singleJob => bookmarked.push(singleJob))
+
+  const hiddenJobs = await Job.find({ _id: Object(bookmarked) })
+  res.json({
+    hiddenJobs
+  })
+};
+
+
