@@ -15,6 +15,9 @@ const verifyJWT = require('../utilities/verifyJWT');
 
 // console.log('hello')
 
+
+
+
 // get all search  users
 router.get('/search-user', verifyJWT, getSearchUser);
 
@@ -34,7 +37,7 @@ router.post('/check-username/:username', checkUsername);
 router.post('/create', create);
 
 //get the user info
-router.get('/:email', verifyJWT, get);
+router.get('/all/:email', get);
 
 //get single email by email  
 router.get('/email/:email', getSingleEmail);
