@@ -9,6 +9,7 @@ const skillAssessment = require('./routes/skillAssessment');
 const countryCode = require('./routes/countryCode.js');
 const job = require('./routes/job');
 const resource = require('./routes/resource');
+const blogs = require('./routes/blogs');
 
 
 const app = express();
@@ -39,6 +40,7 @@ app.use('/country', countryCode);
 app.use('/skillassessment', skillAssessment);
 app.use('/job', job);
 app.use('/resource', resource);
+app.use('/blogs', blogs);
 
 // for chat addmsg
 app.use("/messages", messageRoute);
