@@ -172,23 +172,29 @@ exports.applyJob = async (req, res) => {
     // const response = await Job.updateOne({ _id=ObjectID(id) },{$push:{applications:}})
 };
 
-//Load bookmarked Jobs
-exports.bookmarkedJobs = async (req, res) => {
-    const bookmarked = [];
-    const loadedBookmarked = await User.find({ email: req?.decoded?.userData?.email })
-    console.log(loadedBookmarked?.bookmarkedJobs)
-};
 
 //Load hiddenJobs Jobs
 exports.hiddenJobs = async (req, res) => {
-    const bookmarked = [];
+    const hiddenJobsId = [];
     // find  and push the bookmarked jobs ID
     const loadeduser = await User.findOne({ email: req?.decoded?.userData?.email })
-    loadeduser?.hiddenJobs?.map(singleJob => bookmarked.push(singleJob))
+    loadeduser?.hiddenJobs?.map(singleJob => hiddenJobsId.push(singleJob))
 
-    const hiddenJobs = await Job.find({ _id: Object(bookmarked) })
+    const hiddenJobs = await Job.find({ _id: Object(hiddenJobsId) })
     res.json({
         hiddenJobs
     })
 };
 
+//Load bookmarked Jobs
+exports.bookmarkedJobs = async (req, res) => {
+    const bookmarkedJobsId = [];
+    // find  and push the bookmarked jobs ID
+    const loadeduser = await User.findOne({ email: req?.decoded?.userData?.email })
+    loadeduser?.bookmarkedJobs?.map(singleJob => bookmarkedJobsId.push(singleJob))
+
+    const bookmarkedJobs = await Job.find({ _id: Object(bookmarkedJobsId) })
+    res.json({
+        bookmarkedJobs
+    })
+};

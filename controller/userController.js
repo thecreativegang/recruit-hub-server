@@ -4,6 +4,8 @@ const { sendError } = require('../utilities/errorHelper');
 const userSchema = require('../Schemas/userSchema');
 const User = new mongoose.model("User", userSchema);
 const jwt = require('jsonwebtoken');
+const Job = require('../Schemas/postJobSchema');
+
 
 const generateToken = (userData) => {
   return jwt.sign(userData, process.env.JWT_SECRET_KEY, { expiresIn: '1d' });
@@ -132,17 +134,23 @@ exports.hideJob = async (req, res) => {
   res.send(response)
 };
 
+
+//Bookmark Job
+exports.bookmarkJob = async (req, res) => {
+  const response = await User.updateOne({ email: req?.decoded?.userData?.email, bookmarkedJobs: { "$ne": req?.params?.id } }, { $push: { bookmarkedJobs: req?.params?.id } })
+  res.send(response)
+};
+
 //Remove Item from hidden Jobs
 exports.removeFromHidden = async (req, res) => {
-  const bookmarked = [];
-  // find  and push the bookmarked jobs ID
-  const loadeduser = await User.findOne({ email: req?.decoded?.userData?.email })
-  loadeduser?.hiddenJobs?.map(singleJob => bookmarked.push(singleJob))
+  const response = await User.updateOne({ email: req?.decoded?.userData?.email, hiddenJobs: { "$in": req?.params?.id } }, { $pull: { hiddenJobs: req?.params?.id } })
+  res.send(response)
+};
 
-  const hiddenJobs = await Job.find({ _id: Object(bookmarked) })
-  res.json({
-    hiddenJobs
-  })
+//Remove Item from bookmarked Jobs
+exports.removeFromBookmark = async (req, res) => {
+  const response = await User.updateOne({ email: req?.decoded?.userData?.email, bookmarkedJobs: { "$in": req?.params?.id } }, { $pull: { bookmarkedJobs: req?.params?.id } })
+  res.send(response)
 };
 
 

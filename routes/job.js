@@ -20,12 +20,11 @@ router.post('/filter', decodeToken, filter);
 //apply to a job
 router.post('/apply/:id', decodeToken, applyJob);
 
-//Load Bookmarked Job
-router.get('/bookmarked', verifyJWT, bookmarkedJobs);
-
 //Load hidden Job
 router.get('/hidden', verifyJWT, hiddenJobs);
 
+//Load Bookmarked Job
+router.get('/bookmarked', verifyJWT, bookmarkedJobs);
 
 
 
