@@ -13,12 +13,19 @@ const userSchema = mongoose.Schema({
   },
   username: {
     type: String,
-    default: ''
+    default: '',
   },
   accountType: {
     type: String,
     enum: ['developer', 'recruiter'],
-    default: ''
+    default: '',
+  },
+  assessmentTestNumber: {
+    required: function () {
+      return this.accountType === 'developer';
+    },
+    type: Number,
+    default: 0,
   },
   isAdmin: {
     type: Boolean,
@@ -26,15 +33,12 @@ const userSchema = mongoose.Schema({
   },
   wishList: {
     type: Array,
-
   },
   hiddenJobs: {
     type: Array,
-
   },
   bookmarkedJobs: {
     type: Array,
-
   },
 });
 
