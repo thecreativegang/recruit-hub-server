@@ -13,7 +13,7 @@ const userSchema = mongoose.Schema({
   },
   username: {
     type: String,
-    default: ''
+    default: '',
   },
   coverPhoto: {
     type: String,
@@ -38,7 +38,14 @@ const userSchema = mongoose.Schema({
   accountType: {
     type: String,
     enum: ['developer', 'recruiter'],
-    default: ''
+    default: '',
+  },
+  assessmentTestNumber: {
+    required: function () {
+      return this.accountType === 'developer';
+    },
+    type: Number,
+    default: 0,
   },
 
   contactsInfo: {
@@ -101,11 +108,9 @@ const userSchema = mongoose.Schema({
   },
   wishList: {
     type: Array,
-
   },
   hiddenJobs: {
     type: Array,
-
   },
   bookmarkedJobs: {
     type: Array,
