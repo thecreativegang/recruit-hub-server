@@ -34,7 +34,7 @@ router.get('/', verifyJWT, getAllUsers);
 router.get('/admin', verifyJWT, getAdmin);
 
 // ger all developer
-router.get('/developer', getAllDeveloper);
+router.get('/developer', verifyJWT, getAllDeveloper);
 
 //Check username is valid or not
 router.post('/check-username/:username', checkUsername);
