@@ -114,6 +114,26 @@ exports.getAllDeveloper = async (req, res) => {
   const AllDeveloper = await User.find({ accountType: 'developer' });
   res.send(AllDeveloper);
 };
+
+// Make admin
+exports.makeAdmin = async (req, res) => {
+  const id = req.params.id;
+  const update = {
+    isAdmin: true,
+  };
+  const result = await User.findOneAndUpdate({ _id: id }, update);
+  res.status(200).send({ result, success: true });
+};
+
+// remove from admin
+exports.removeAdmin = async (req, res) => {
+  const id = req.params.id;
+  const update = {
+    isAdmin: false,
+  };
+  const result = await User.findOneAndUpdate({ _id: id }, update);
+  res.status(200).send({ result, success: true });
+};
 // get search result by query
 exports.addToWishList = async (req, res) => {
   // check if id is already available

@@ -15,6 +15,8 @@ const {
   removeFromHidden,
   getAdmin,
   getAllDeveloper,
+  makeAdmin,
+  removeAdmin,
 } = require('../controller/userController');
 
 // const { create } = require('../controller/userController');
@@ -35,6 +37,10 @@ router.get('/admin', verifyJWT, getAdmin);
 
 // ger all developer
 router.get('/developer', verifyJWT, getAllDeveloper);
+
+// change developer admin status
+router.put('/developer-admin/:id', makeAdmin);
+router.put('/developer-admin-remove/:id', removeAdmin);
 
 //Check username is valid or not
 router.post('/check-username/:username', checkUsername);
