@@ -8,6 +8,7 @@ const jwt = require('jsonwebtoken');
 const generateToken = (userData) => {
   return jwt.sign(userData, process.env.JWT_SECRET_KEY, { expiresIn: '1d' });
 };
+// add a new user
 exports.create = async (req, res) => {
   const userData = req.body;
   const accessToken = await generateToken({ userData });
@@ -59,7 +60,7 @@ exports.getSingleEmail = async (req, res) => {
   const user = await User.findOne(query);
   res.send(user);
 }
-
+// update username
 exports.updateUsername = async (req, res) => {
   const userInfo = await User.updateOne({ email: req?.decoded?.userData?.email }, { username: req?.body?.username })
   res.json({
@@ -77,7 +78,6 @@ exports.getSearchUser = async (req, res) => {
         // { email: { $ne: req?.decoded?.userData?.email } },
       ]
     } : {};
-
 
   const users = await User.find(keyword);
   res.send(users);
@@ -146,3 +146,11 @@ exports.removeFromHidden = async (req, res) => {
 };
 
 
+// update all profile information
+exports.updateProfileInfo = async (req, res) => {
+
+  // const userInfo = await User.updateOne({ email: req?.decoded?.userData?.email }, { username: req?.body?.username })
+  // res.json({
+  //   userInfo
+  // })
+}
