@@ -66,7 +66,6 @@ exports.postAJob = async (req, res) => {
         recruitersName,
         payRange
     }
-    console.log(jobData)
     const postNewJob = new Job(jobData);
     const response = await postNewJob.save(function (err) {
         if (err) {
@@ -105,7 +104,6 @@ exports.filter = async (req, res) => {
 
     let searchData = {}
     const { searchJobNature, searchSearchText, searchCompanySize, searchPayRange, searchShowAllorOnlyMine } = req?.body;
-    console.log(searchSearchText)
     const validateNullSearch = async () => {
         if ((searchSearchText.trim(" ").length === 0) &&
             (searchJobNature.length === 0) &&
@@ -167,8 +165,8 @@ exports.filter = async (req, res) => {
 //Apply to a job
 exports.applyJob = async (req, res) => {
     const { id } = req.params;
-    console.log('id', id)
-    console.log('req.decoded', await req?.decoded)
+    // console.log('id', id)
+    // console.log('req.decoded', await req?.decoded)
     // const response = await Job.updateOne({ _id=ObjectID(id) },{$push:{applications:}})
 };
 
@@ -176,7 +174,7 @@ exports.applyJob = async (req, res) => {
 exports.bookmarkedJobs = async (req, res) => {
     const bookmarked = [];
     const loadedBookmarked = await User.find({ email: req?.decoded?.userData?.email })
-    console.log(loadedBookmarked?.bookmarkedJobs)
+    // console.log(loadedBookmarked?.bookmarkedJobs)
 };
 
 //Load hiddenJobs Jobs
