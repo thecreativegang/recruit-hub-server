@@ -49,7 +49,6 @@ const userSchema = mongoose.Schema({
   },
 
   contactsInfo: {
-    type: Object,
     email: {
       type: String,
       default: ''
@@ -62,7 +61,6 @@ const userSchema = mongoose.Schema({
     },
   },
   socialLink: {
-    type: Object,
     github: {
       type: String,
       default: ''

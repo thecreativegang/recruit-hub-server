@@ -56,13 +56,8 @@ exports.getSingleEmail = async (req, res) => {
   const query = { email: email };
   const user = await User.findOne(query);
   res.send(user);
-<<<<<<< HEAD
-}
-// update username
-=======
 };
 
->>>>>>> 0f5d705b9e0a937c4fd5956a3d57887577eff510
 exports.updateUsername = async (req, res) => {
   const userInfo = await User.updateOne(
     { email: req?.decoded?.userData?.email },
@@ -193,9 +188,11 @@ exports.removeFromHidden = async (req, res) => {
 
 // update all profile information
 exports.updateProfileInfo = async (req, res) => {
+  const id = req.params.id;
+  const update = {
+    isAdmin: true,
+  };
+  const result = await User.findOneAndUpdate({ _id: id }, update);
+  res.status(200).send({ result, success: true });
+};
 
-  // const userInfo = await User.updateOne({ email: req?.decoded?.userData?.email }, { username: req?.body?.username })
-  // res.json({
-  //   userInfo
-  // })
-}
