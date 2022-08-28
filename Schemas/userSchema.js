@@ -116,36 +116,3 @@ const userSchema = mongoose.Schema({
 });
 
 module.exports = userSchema;
-
-
-// const userInfo = [
-//   {
-//     skills: [
-//       { skillName: "", skillTest: 100, }, { skillName: "", skillTest: "", }, { skillName: "", skillTest: "", },
-//     ],
-//     featured: [
-//       { featuredPhoto: "", featuredTitle: "", featuredDescription: "", },
-//       { featuredPhoto: "", featuredTitle: "", featuredDescription: "", },
-//       { featuredPhoto: "", featuredTitle: "", featuredDescription: "", },
-//     ],
-
-//     experince: [
-//       { experinceTitle: "", jobType: "full time", duration: "", skills: ["", "", "", "",], }
-//     ],
-
-//     courses: [
-//       { coursesPhoto: "", coursesTitle: "", coursesDescription: "", },
-//       { coursesPhoto: "", coursesTitle: "", coursesDescription: "", },
-//       { coursesPhoto: "", coursesTitle: "", coursesDescription: "", },
-//     ],
-
-//     projects: [
-//       { projectsPhoto: "", projectsTitle: "", projectsDescription: "", projectsLink: { githubServer: "", githubClint: "", liveSite: "", } },
-
-//       { projectsPhoto: "", projectsTitle: "", projectsDescription: "", projectsLink: { githubServer: "", githubClint: "", liveSite: "", } },
-
-//       { projectsPhoto: "", projectsTitle: "", projectsDescription: "", projectsLink: { githubServer: "", githubClint: "", liveSite: "", } },
-//     ],
-
-//   },
-// ]
