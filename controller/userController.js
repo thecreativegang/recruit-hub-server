@@ -115,6 +115,12 @@ exports.getAllDeveloper = async (req, res) => {
   const AllDeveloper = await User.find({ accountType: 'developer' });
   res.send(AllDeveloper);
 };
+// get single  developer by :id
+exports.getSingleDeveloper = async (req, res) => {
+  const id = req.params.id;
+  const singleDeveloper = await User.findOne({ _id: id });
+  res.send(singleDeveloper);
+};
 
 // Make admin
 exports.makeAdmin = async (req, res) => {

@@ -18,6 +18,7 @@ const {
   makeAdmin,
   removeAdmin,
   updateProfileInfo,
+  getSingleDeveloper,
 } = require('../controller/userController');
 
 // const { create } = require('../controller/userController');
@@ -38,6 +39,8 @@ router.get('/admin', verifyJWT, getAdmin);
 
 // ger all developer
 router.get('/developer', verifyJWT, getAllDeveloper);
+// get developer by id
+router.get('/developer/:id', verifyJWT, getSingleDeveloper);
 
 // change developer admin status
 router.put('/developer-admin/:id', makeAdmin);
