@@ -19,6 +19,7 @@ const {
   removeAdmin,
   updateProfileInfo,
   getSingleDeveloper,
+  updateSkillTestNumber,
 } = require('../controller/userController');
 
 // const { create } = require('../controller/userController');
@@ -45,8 +46,12 @@ router.get('/developer/:id', verifyJWT, getSingleDeveloper);
 // change developer admin status
 router.put('/developer-admin/:id', makeAdmin);
 router.put('/developer-admin-remove/:id', removeAdmin);
+
 // update  developer profile
 router.put('/user-profile/:id', updateProfileInfo);
+
+// Edit skill assessment number
+router.put('/skilltest-number/:email', updateSkillTestNumber);
 
 //Check username is valid or not
 router.post('/check-username/:username', checkUsername);

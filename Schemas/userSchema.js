@@ -21,23 +21,23 @@ const userSchema = mongoose.Schema({
   },
   coverPhoto: {
     type: String,
-    default: ''
+    default: '',
   },
   profilePhoto: {
     type: String,
-    default: ''
+    default: '',
   },
   bio: {
     type: String,
-    default: ''
+    default: '',
   },
   country: {
     type: String,
-    default: ''
+    default: '',
   },
   state: {
     type: String,
-    default: ''
+    default: '',
   },
   accountType: {
     type: String,
@@ -55,36 +55,35 @@ const userSchema = mongoose.Schema({
   contactsInfo: {
     email: {
       type: String,
-      default: ''
-
+      default: '',
     },
     phone: {
       type: String,
-      default: ''
-
+      default: '',
     },
   },
   socialLink: {
     github: {
       type: String,
-      default: ''
-
+      default: '',
     },
     linkdin: {
       type: String,
-      default: ''
-
+      default: '',
     },
     facebook: {
       type: String,
-      default: ''
-
+      default: '',
     },
     instagram: {
       type: String,
-      default: ''
-
+      default: '',
     },
+  },
+
+  skillTestMark: {
+    type: Number,
+    default: 0,
   },
 
   featured: {
@@ -102,7 +101,6 @@ const userSchema = mongoose.Schema({
   projects: {
     type: Array,
   },
-
 
   isAdmin: {
     type: Boolean,
