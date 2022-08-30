@@ -198,27 +198,12 @@ exports.removeFromHidden = async (req, res) => {
 // update all profile information
 exports.updateProfileInfo = async (req, res) => {
   console.log(req.body);
-  let {
-    assessmentTestNumber,
-    contactsInfo,
-    socialLink,
-    coverPhoto,
-    profilePhoto,
-    bio,
-    country,
-    state,
-    featured,
-    skills,
-    experience,
-    courses,
-    projects,
-    wishList,
-    hiddenJobs,
-    bookmarkedJobs,
-  } = req.body;
+
   const id = req.params.id;
+  let { assessmentTestNumber, name, contactsInfo, socialLink, coverPhoto, profilePhoto, bio, country, state, featured, skills, experience, courses, projects, wishList, hiddenJobs, bookmarkedJobs } = req.body;
   const update = {
     assessmentTestNumber,
+    name,
     contactsInfo,
     socialLink,
     coverPhoto,
@@ -235,8 +220,8 @@ exports.updateProfileInfo = async (req, res) => {
     hiddenJobs,
     bookmarkedJobs,
   };
-  const result = await User.findOneAndUpdate({ _id: id }, update, {
-    upsert: true,
-  });
+
+  const result = await User.findOneAndUpdate({ _id: id }, update, { upsert: true, new: true });
+
   res.status(200).send({ result, success: true });
 };

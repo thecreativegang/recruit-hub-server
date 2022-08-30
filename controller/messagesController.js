@@ -8,7 +8,6 @@ module.exports.addMessage = async (req, res, next) => {
             users: [from, to],
             sender: from,
         });
-
         if (data) return res.json({ msg: "Message added successfully." });
         else return res.json({ msg: "Failed to add message to the database" });
     } catch (ex) {
@@ -17,9 +16,9 @@ module.exports.addMessage = async (req, res, next) => {
 };
 
 module.exports.getMessages = async (req, res, next) => {
-
     try {
         const { from, to } = req.body;
+        console.log(from, to);
         const messages = await Messages.find({
             users: {
                 $all: [from, to],
