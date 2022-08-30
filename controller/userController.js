@@ -72,24 +72,24 @@ exports.updateUsername = async (req, res) => {
 exports.getSearchUser = async (req, res) => {
   const keyword = req.query.search
     ? {
-      $or: [
-        {
-          username: {
-            $regex: req.query.search,
-            $ne: req?.decoded?.userData?.email,
-            $options: 'i',
+        $or: [
+          {
+            username: {
+              $regex: req.query.search,
+              $ne: req?.decoded?.userData?.email,
+              $options: 'i',
+            },
           },
-        },
-        {
-          email: {
-            $regex: req.query.search,
-            $ne: req?.decoded?.userData?.email,
-            $options: 'i',
+          {
+            email: {
+              $regex: req.query.search,
+              $ne: req?.decoded?.userData?.email,
+              $options: 'i',
+            },
           },
-        },
-        // { email: { $ne: req?.decoded?.userData?.email } },
-      ],
-    }
+          // { email: { $ne: req?.decoded?.userData?.email } },
+        ],
+      }
     : {};
 
   const users = await User.find(keyword);
@@ -128,7 +128,9 @@ exports.makeAdmin = async (req, res) => {
   const update = {
     isAdmin: true,
   };
-  const result = await User.findOneAndUpdate({ _id: id }, update);
+  const result = await User.findOneAndUpdate({ _id: id }, update, {
+    new: true,
+  });
   res.status(200).send({ result, success: true });
 };
 
@@ -138,7 +140,9 @@ exports.removeAdmin = async (req, res) => {
   const update = {
     isAdmin: false,
   };
-  const result = await User.findOneAndUpdate({ _id: id }, update);
+  const result = await User.findOneAndUpdate({ _id: id }, update, {
+    new: true,
+  });
   res.status(200).send({ result, success: true });
 };
 // get search result by query
@@ -191,10 +195,10 @@ exports.removeFromHidden = async (req, res) => {
   });
 };
 
-
 // update all profile information
 exports.updateProfileInfo = async (req, res) => {
   console.log(req.body);
+
   const id = req.params.id;
   let { assessmentTestNumber, name, contactsInfo, socialLink, coverPhoto, profilePhoto, bio, country, state, featured, skills, experience, courses, projects, wishList, hiddenJobs, bookmarkedJobs } = req.body;
   const update = {
@@ -215,10 +219,9 @@ exports.updateProfileInfo = async (req, res) => {
     wishList,
     hiddenJobs,
     bookmarkedJobs,
-
-
   };
+
   const result = await User.findOneAndUpdate({ _id: id }, update, { upsert: true, new: true });
+
   res.status(200).send({ result, success: true });
 };
-
