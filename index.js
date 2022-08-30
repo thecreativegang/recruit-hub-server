@@ -70,9 +70,6 @@ const io = socket(server, {
   },
 });
 
-
-
-
 io.on("connection", (socket) => {
 
   socket.on("send-msg", (msg) => {
@@ -82,7 +79,7 @@ io.on("connection", (socket) => {
 
   // socket.on("add-user", (userId) => {
   //   console.log(userId)
-  //  user(userId, socket.id);
+  //   user(userId, socket.id);
   // });
 
   // socket.on("send-msg", (data) => {

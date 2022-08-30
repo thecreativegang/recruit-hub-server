@@ -46,7 +46,6 @@ router.get('/developer/:id', verifyJWT, getSingleDeveloper);
 router.put('/developer-admin/:id', makeAdmin);
 router.put('/developer-admin-remove/:id', removeAdmin);
 // update  developer profile
-
 router.put('/user-profile/:id', updateProfileInfo);
 
 //Check username is valid or not
