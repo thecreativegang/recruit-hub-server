@@ -68,6 +68,19 @@ exports.updateUsername = async (req, res) => {
   });
 };
 
+// User skill test number update
+exports.updateSkillTestNumber = async (req, res) => {
+  const email = req.params.email;
+  const update = {
+    skillTestMark: req.body.score,
+  };
+  const userInfo = await User.findOneAndUpdate({ email }, update, {
+    new: true,
+    upsert: true,
+  });
+  res.status(200).json(userInfo);
+};
+
 // get search result by query {sourav}
 exports.getSearchUser = async (req, res) => {
   const keyword = req.query.search
@@ -200,7 +213,25 @@ exports.updateProfileInfo = async (req, res) => {
   console.log(req.body);
 
   const id = req.params.id;
-  let { assessmentTestNumber, name, contactsInfo, socialLink, coverPhoto, profilePhoto, bio, country, state, featured, skills, experience, courses, projects, wishList, hiddenJobs, bookmarkedJobs } = req.body;
+  let {
+    assessmentTestNumber,
+    name,
+    contactsInfo,
+    socialLink,
+    coverPhoto,
+    profilePhoto,
+    bio,
+    country,
+    state,
+    featured,
+    skills,
+    experience,
+    courses,
+    projects,
+    wishList,
+    hiddenJobs,
+    bookmarkedJobs,
+  } = req.body;
   const update = {
     assessmentTestNumber,
     name,
@@ -221,7 +252,10 @@ exports.updateProfileInfo = async (req, res) => {
     bookmarkedJobs,
   };
 
-  const result = await User.findOneAndUpdate({ _id: id }, update, { upsert: true, new: true });
+  const result = await User.findOneAndUpdate({ _id: id }, update, {
+    upsert: true,
+    new: true,
+  });
 
   res.status(200).send({ result, success: true });
 };
