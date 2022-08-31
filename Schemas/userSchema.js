@@ -89,32 +89,20 @@ const userSchema = mongoose.Schema({
   featured: {
     type: Array,
   },
-  skills: {
-    type: Array,
-  },
-  experience: {
-    type: Array,
-  },
-  courses: {
-    type: Array,
-  },
-  projects: {
-    type: Array,
-  },
+  skills: Array,
+  experience: Array,
+  courses: Array,
+  projects: Array,
+
 
   isAdmin: {
     type: Boolean,
     default: false,
   },
-  wishList: {
-    type: Array,
-  },
-  hiddenJobs: {
-    type: Array,
-  },
-  bookmarkedJobs: {
-    type: Array,
-  },
+  wishList: Array,
+  hiddenJobs: Array,
+  bookmarkedJobs: Array,
+
 });
 
 module.exports = userSchema;
