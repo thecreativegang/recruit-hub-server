@@ -85,24 +85,24 @@ exports.updateSkillTestNumber = async (req, res) => {
 exports.getSearchUser = async (req, res) => {
   const keyword = req.query.search
     ? {
-        $or: [
-          {
-            username: {
-              $regex: req.query.search,
-              $ne: req?.decoded?.userData?.email,
-              $options: 'i',
-            },
+      $or: [
+        {
+          username: {
+            $regex: req.query.search,
+            $ne: req?.decoded?.userData?.email,
+            $options: 'i',
           },
-          {
-            email: {
-              $regex: req.query.search,
-              $ne: req?.decoded?.userData?.email,
-              $options: 'i',
-            },
+        },
+        {
+          email: {
+            $regex: req.query.search,
+            $ne: req?.decoded?.userData?.email,
+            $options: 'i',
           },
-          // { email: { $ne: req?.decoded?.userData?.email } },
-        ],
-      }
+        },
+        // { email: { $ne: req?.decoded?.userData?.email } },
+      ],
+    }
     : {};
 
   const users = await User.find(keyword);
@@ -210,7 +210,7 @@ exports.removeFromHidden = async (req, res) => {
 
 // update all profile information
 exports.updateProfileInfo = async (req, res) => {
-  console.log(req.body);
+  // console.log(req.body, req.params.id);
 
   const id = req.params.id;
   let {
