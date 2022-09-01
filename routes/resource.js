@@ -13,6 +13,8 @@ const verifyJWT = require('../utilities/verifyJWT');
 
 router.get('/', getAllResource);
 
+// get single search result
+
 router.get('/search', verifyJWT, getSearchResource);
 
 // post resource
