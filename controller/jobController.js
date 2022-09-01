@@ -168,7 +168,6 @@ exports.filter = async (req, res) => {
 exports.applyJob = async (req, res) => {
     const { id } = req.params;
     console.log('id', id)
-    console.log('req.decoded', await req?.decoded)
     // const response = await Job.updateOne({ _id=ObjectID(id) },{$push:{applications:}})
 };
 
