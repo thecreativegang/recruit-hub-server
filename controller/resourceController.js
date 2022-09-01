@@ -1,6 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const Resource = require('../Schemas/ResourceSchema');
+const Resource = require('../Schemas/resourceSchema');
 
 
 const generateToken = (userData) => {
